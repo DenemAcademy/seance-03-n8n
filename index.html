@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Séance 3 — n8n | DENEM Academy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config={theme:{extend:{fontFamily:{'space':['Space Grotesk','sans-serif'],'mono':['JetBrains Mono','monospace'],'inter':['Inter','sans-serif']},colors:{'sol':{'black':'#1F0A32','dark':'#272B5C','accent':'#4CC0C0','cyan':'#30D9DE','navy':'#272B5C','deep':'#1F0A32','green':'#4CC0C0','purple':'#272B5C','orange':'#f97316','gray':'#64748d','lightgray':'#e8edf2','bg':'#ffffff','muted':'#f4f7fa'}}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+::selection{background:#4CC0C0;color:#1F0A32}
+body{cursor:none;background:#fff;color:#1F0A32;font-family:'Inter',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* Gradients */
+.gradient-text{background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gs 6s ease infinite}
+.gradient-bg{background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);background-size:200% 200%;animation:gs 8s ease infinite}
+
+/* Keyframes */
+@keyframes gs{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatSlow{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(3deg)}}
+@keyframes floatReverse{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(12px) rotate(-2deg)}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.4}100%{transform:scale(1.5);opacity:0}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes bounceSubtle{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(76,192,192,.2)}50%{box-shadow:0 0 20px rgba(76,192,192,.4)}}
+@keyframes dash{to{stroke-dashoffset:0}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes wiggle{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-3deg)}75%{transform:rotate(3deg)}}
+
+/* Float animations */
+.animate-float{animation:float 6s ease-in-out infinite}
+.animate-float-slow{animation:floatSlow 8s ease-in-out infinite}
+.animate-float-reverse{animation:floatReverse 7s ease-in-out infinite}
+.animate-bounce-subtle{animation:bounceSubtle 3s ease-in-out infinite}
+.animate-glow{animation:glow 3s ease-in-out infinite}
+.animate-wiggle{animation:wiggle 4s ease-in-out infinite}
+.animate-spin-slow{animation:rotate 20s linear infinite}
+
+/* Pulse ring effect */
+.pulse-ring{position:relative}.pulse-ring::after{content:'';position:absolute;inset:-4px;border-radius:inherit;border:2px solid #4CC0C0;animation:pulse-ring 2s cubic-bezier(.4,0,.6,1) infinite}
+
+/* Shimmer loading effect */
+.shimmer{background:linear-gradient(90deg,#f4f7fa 25%,#e8edf2 50%,#f4f7fa 75%);background-size:200% 100%;animation:shimmer 2s ease-in-out infinite}
+
+/* Typewriter */
+.typewriter{overflow:hidden;white-space:nowrap;border-right:2px solid #4CC0C0;animation:typewriter 2s steps(30) forwards,blink .8s step-end infinite}
+
+/* Cursor blink for terminal */
+.blink-cursor::after{content:'▋';animation:blink 1s step-end infinite;color:#4CC0C0}
+
+/* Scroll reveal with variants */
+.sr{opacity:0;transform:translateY(20px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr.v{opacity:1;transform:translateY(0)}
+.sr-left{opacity:0;transform:translateX(-30px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-left.v{opacity:1;transform:translateX(0)}
+.sr-right{opacity:0;transform:translateX(30px);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-right.v{opacity:1;transform:translateX(0)}
+.sr-scale{opacity:0;transform:scale(.9);transition:all .8s cubic-bezier(.25,.46,.45,.94)}.sr-scale.v{opacity:1;transform:scale(1)}
+.s1{transition-delay:.1s}.s2{transition-delay:.2s}.s3{transition-delay:.3s}.s4{transition-delay:.4s}.s5{transition-delay:.5s}.s6{transition-delay:.6s}.s7{transition-delay:.7s}
+
+/* Card hover with multiple styles */
+.ch{transition:all .35s cubic-bezier(.25,.46,.45,.94)}.ch:hover{transform:translateY(-6px);box-shadow:rgba(39,43,92,.12) 0px 20px 40px -8px,rgba(76,192,192,.08) 0px 8px 20px -6px}
+.ch-scale{transition:all .3s ease}.ch-scale:hover{transform:scale(1.03);box-shadow:rgba(39,43,92,.1) 0px 15px 30px -5px}
+.ch-glow{transition:all .3s ease}.ch-glow:hover{box-shadow:0 0 0 3px rgba(76,192,192,.15),rgba(39,43,92,.1) 0px 10px 25px -5px}
+.ch-tilt{transition:all .3s ease;transform-style:preserve-3d}
+
+/* Magnetic button effect */
+.magnetic{transition:transform .2s ease}
+
+/* Underline animation on links */
+.link-anim{position:relative;text-decoration:none}.link-anim::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:#4CC0C0;transition:width .3s ease}.link-anim:hover::after{width:100%}
+
+/* Gradient border effect */
+.gradient-border{position:relative;background:#fff;border-radius:8px}.gradient-border::before{content:'';position:absolute;inset:-2px;border-radius:10px;background:linear-gradient(135deg,#272B5C,#4CC0C0,#30D9DE);z-index:-1;background-size:200% 200%;animation:gs 4s ease infinite}
+
+/* Glassmorphism card */
+.glass{background:rgba(255,255,255,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(76,192,192,.15)}
+
+/* Cursor glow */
+.cursor-glow{position:fixed;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(76,192,192,.06),transparent 70%);pointer-events:none;z-index:0;transition:transform .15s ease}.custom-cursor{position:fixed;width:32px;height:32px;pointer-events:none;z-index:99999;transition:transform .1s ease;transform:translate(-16px,-16px)}.custom-cursor img{width:32px;height:32px;border-radius:6px}
+
+/* Animated counter */
+.counter{font-variant-numeric:tabular-nums;transition:all .3s ease}
+
+/* Staggered list animation */
+.stagger-list>*{opacity:0;transform:translateY(10px);transition:all .5s ease}.stagger-list.v>*{opacity:1;transform:translateY(0)}
+.stagger-list>*:nth-child(1){transition-delay:.05s}.stagger-list>*:nth-child(2){transition-delay:.1s}.stagger-list>*:nth-child(3){transition-delay:.15s}.stagger-list>*:nth-child(4){transition-delay:.2s}.stagger-list>*:nth-child(5){transition-delay:.25s}.stagger-list>*:nth-child(6){transition-delay:.3s}.stagger-list>*:nth-child(7){transition-delay:.35s}.stagger-list>*:nth-child(8){transition-delay:.4s}
+
+/* Parallax layer */
+.parallax{transition:transform .1s linear}
+
+/* Smooth underline reveal */
+.reveal-line{position:relative;display:inline-block}.reveal-line::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:#4CC0C0;transform:scaleX(0);transform-origin:right;transition:transform .4s ease}.reveal-line.v::after{transform:scaleX(1);transform-origin:left}
+
+/* Dot pattern overlay */
+.dots-overlay{position:relative}.dots-overlay::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(76,192,192,.07) 1px,transparent 1px);background-size:16px 16px;pointer-events:none;border-radius:inherit}
+
+/* Tags */
+.tag{display:inline-block;padding:5px 14px;font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.06em;border:1.5px solid;border-radius:4px;transition:all .3s ease}.tag:hover{transform:translateY(-2px)}
+.tb{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;font-size:.72rem;font-weight:500;font-family:'JetBrains Mono',monospace;border:1.5px solid;border-radius:4px;transition:all .3s ease}.tb:hover{transform:translateY(-1px)}
+
+/* Progress bar */
+.progress-bar{position:fixed;top:0;left:0;height:3px;z-index:9999;transition:width .15s ease}
+
+/* Nav */
+nav{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:all .3s ease}
+nav.scrolled{box-shadow:rgba(39,43,92,.08) 0px 4px 12px}
+
+/* Code blocks */
+.code{background:#1F0A32;color:#e8edf2;border-left:4px solid #4CC0C0;padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.8;border-radius:6px;transition:all .3s ease}.code:hover{box-shadow:rgba(76,192,192,.1) 0px 8px 25px}
+.code-inline{background:#f4f7fa;color:#272B5C;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:.82rem;border-radius:4px;border:1px solid #e8edf2;transition:all .2s ease}.code-inline:hover{background:#edf1f6;border-color:#4CC0C0}
+.cmd{background:#1F0A32;color:#30D9DE;padding:12px 20px;font-family:'JetBrains Mono',monospace;font-size:.85rem;border-radius:6px;display:flex;align-items:center;gap:8px;transition:all .3s ease;cursor:pointer;position:relative;user-select:all}.cmd:hover{transform:translateX(4px);box-shadow:rgba(76,192,192,.15) 0px 4px 15px;border:1px solid rgba(76,192,192,.3)}.cmd:active{transform:scale(.98)}
+.cmd::before{content:'$';color:#64748d}
+.cmd::after{content:'cliquer pour copier';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:.6rem;color:#64748d;opacity:.5;transition:all .3s ease;pointer-events:none}
+.cmd:hover::after{opacity:1;color:#4CC0C0}
+.cmd.copied::after{content:'copié !';color:#30D9DE;opacity:1;font-weight:600}
+.cmd.copied{box-shadow:0 0 0 2px rgba(76,192,192,.3),rgba(76,192,192,.15) 0px 4px 15px}
+
+/* Cards */
+.card{background:#fff;border:1px solid #e8edf2;border-radius:8px;box-shadow:rgba(39,43,92,.06) 0px 2px 5px,rgba(0,0,0,.03) 0px 1px 3px;transition:all .35s ease}
+.card-accent{background:#fff;border:1.5px solid #4CC0C0;border-radius:8px;box-shadow:rgba(76,192,192,.08) 0px 4px 12px;transition:all .35s ease}
+.card-green{background:#fff;border:1.5px solid #30D9DE;border-radius:8px;box-shadow:rgba(48,217,222,.08) 0px 4px 12px;transition:all .35s ease}
+.card-orange{background:#fff;border:1.5px solid #f97316;border-radius:8px;box-shadow:rgba(249,115,22,.06) 0px 4px 12px;transition:all .35s ease}
+.card-light{background:#fff;border:1px solid #e8edf2;border-radius:6px;transition:all .3s ease}.card-light:hover{border-color:#4CC0C0;box-shadow:rgba(76,192,192,.06) 0px 4px 12px}
+
+/* Step numbers */
+.step{width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:600;flex-shrink:0;border:1.5px solid;border-radius:50%;transition:all .3s ease}.step:hover{transform:scale(1.1)}
+
+/* Section counter */
+.sc{position:fixed;bottom:16px;right:16px;z-index:50;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#64748d;background:#fff;border:1px solid #e8edf2;padding:4px 10px;border-radius:4px;box-shadow:rgba(39,43,92,.06) 0px 2px 5px;transition:all .3s ease}
+
+/* Terminal */
+.terminal{background:#1F0A32;border-radius:8px;overflow:hidden;transition:all .4s ease}.terminal:hover{box-shadow:rgba(31,10,50,.3) 0px 20px 40px -10px,rgba(76,192,192,.08) 0px 0px 0px 1px}
+.terminal-bar{background:#272B5C;padding:8px 16px;display:flex;align-items:center;gap:6px}
+.terminal-dot{width:10px;height:10px;border-radius:50%;transition:all .2s ease}
+.terminal:hover .terminal-dot:nth-child(1){transform:scale(1.2)}.terminal:hover .terminal-dot:nth-child(2){transform:scale(1.2);transition-delay:.05s}.terminal:hover .terminal-dot:nth-child(3){transform:scale(1.2);transition-delay:.1s}
+.terminal-body{padding:20px 24px;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.9;color:#e8edf2}
+.terminal-prompt{color:#30D9DE}
+.terminal-cmd{color:#fff}
+.terminal-output{color:#94a3b8}
+.terminal-accent{color:#4CC0C0}
+
+/* Emoji */
+.emoji{filter:drop-shadow(1px 1px 0 rgba(39,43,92,.1));transition:transform .3s ease}.emoji:hover{transform:scale(1.2) rotate(-5deg)}
+
+/* Smooth scroll indicator */
+.scroll-hint{animation:bounceSubtle 2.5s ease-in-out infinite}
+
+/* Noise texture overlay */
+.noise{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+</style>
+</head>
+
+
+<body>
+
+<div class="progress-bar gradient-bg" id="pb"></div>
+<div class="sc" id="sc">1 / 100</div>
+<div class="noise"></div>
+<div class="cursor-glow" id="cg"></div>
+<div class="custom-cursor" id="cc"><img src="logo-denem.jpeg" alt=""></div>
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 border-b border-sol-lightgray" style="box-shadow:rgba(50,50,93,.06) 0px 2px 5px">
+<div class="max-w-6xl mx-auto px-4 flex items-center justify-between h-14">
+    <div class="flex items-center gap-3">
+        <img src="logo-denem.jpeg" alt="DENEM" class="w-7 h-7 rounded">
+        <span class="font-space font-bold text-sm">DENEM Academy</span>
+        <span class="text-sol-gray text-xs">/</span>
+        <span class="text-sol-gray text-xs font-mono">Séance 03</span>
+    </div>
+    <span class="tag border-sol-accent text-sol-accent">Acte 1 — Maîtriser</span>
+</div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- 1-3 : HERO -->
+<!-- ============================================================ -->
+
+<section data-s="1" class="min-h-screen flex items-center justify-center relative pt-14 overflow-hidden">
+<div class="absolute top-24 right-20 w-14 h-14 border-2 border-sol-accent/15 rounded-lg rotate-12 animate-float hidden lg:block"></div>
+<div class="absolute bottom-32 left-16 w-10 h-10 border-2 border-sol-navy/10 rounded-full animate-float-slow hidden lg:block"></div>
+<div class="absolute inset-0 dots-overlay opacity-50"></div>
+<div class="max-w-3xl mx-auto px-4 text-center relative z-10">
+    <div class="sr"><span class="tag border-sol-accent text-sol-accent pulse-ring">Séance 3 sur 24</span></div>
+    <h1 class="sr s1 font-space font-bold text-5xl sm:text-6xl md:text-7xl leading-[.92] mt-6 mb-6">
+        <span class="gradient-text">n8n.</span><br><span class="text-sol-gray text-3xl sm:text-4xl">L'automatisation visuelle.</span>
+    </h1>
+    <p class="sr s2 text-lg text-sol-gray max-w-xl mx-auto leading-relaxed mb-8">Claude Code construit. Codex code en autonomie. Maintenant on voit l'outil qui fait tourner les choses en boucle sans toi. Quand un process doit se répéter automatiquement — relances, notifications, flux de données — c'est n8n.</p>
+    <div class="sr s3 tb border-sol-accent text-sol-accent mx-auto animate-glow"><span class="w-1.5 h-1.5 bg-sol-accent rounded-full"></span>35-45 min</div>
+    <div class="sr s4 mt-16 scroll-hint"><div class="w-6 h-10 border-2 border-sol-navy/20 rounded-full mx-auto flex items-start justify-center p-1"><div class="w-1 h-2.5 bg-sol-accent/40 rounded-full" style="animation:bounceSubtle 2s ease-in-out infinite"></div></div></div>
+</div>
+</section>
+
+<!-- Image n8n login -->
+<section data-s="2" class="py-8">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3 ch" style="overflow:hidden"><img src="img/n8n-login.png" alt="n8n login" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">n8n cloud — la page de connexion</p></div>
+</div>
+</section>
+
+<section data-s="3" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-overview.png" alt="n8n overview" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">Le dashboard n8n — tes workflows d'un coup d'oeil</p></div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 4-8 : C'EST QUOI N8N -->
+<!-- ============================================================ -->
+
+<section data-s="4" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">C'est quoi n8n ?</h2>
+    <p class="text-sol-gray text-lg leading-relaxed mb-4">En une phrase : c'est un outil qui connecte des applications entre elles et automatise des actions. Tu crées des "workflows" — des chaînes d'actions qui se déclenchent automatiquement.</p>
+    <p class="text-sol-gray leading-relaxed">Imagine : un client t'envoie un email → n8n le détecte → extrait les infos → les ajoute dans ton CRM → t'envoie une notification Slack. Tout ça se fait tout seul, sans que tu touches à quoi que ce soit.</p>
+</div>
+</section>
+
+<section data-s="5" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">C'est visuel</h3>
+    <p class="text-sol-gray text-sm mb-4">Pas de code. Tu vois des blocs (les "nodes"), tu les connectes entre eux, tu testes, ça tourne. C'est comme des Legos pour automatiser.</p>
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-editor.png" alt="n8n editor" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">L'éditeur n8n — tu connectes des blocs entre eux</p></div>
+</div>
+</section>
+
+<section data-s="6" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">La logique de base</h3>
+    <div class="flex flex-col sm:flex-row items-center gap-3 mb-4">
+        <div class="p-3 bg-sol-muted border border-sol-lightgray rounded text-center text-sm font-bold" style="color:#4CC0C0">Trigger<br><span class="text-sol-gray font-normal text-xs">Quelque chose se passe</span></div>
+        <div class="text-sol-gray hidden sm:block">→</div>
+        <div class="p-3 bg-sol-muted border border-sol-lightgray rounded text-center text-sm font-bold text-sol-navy">Action<br><span class="text-sol-gray font-normal text-xs">Fais quelque chose</span></div>
+        <div class="text-sol-gray hidden sm:block">→</div>
+        <div class="p-3 bg-sol-muted border border-sol-lightgray rounded text-center text-sm font-bold text-sol-navy">Condition<br><span class="text-sol-gray font-normal text-xs">Si oui / si non</span></div>
+        <div class="text-sol-gray hidden sm:block">→</div>
+        <div class="p-3 bg-sol-muted border border-sol-lightgray rounded text-center text-sm font-bold text-sol-navy">Action<br><span class="text-sol-gray font-normal text-xs">Fais autre chose</span></div>
+    </div>
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-trigger.png" alt="n8n trigger" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">Un trigger dans n8n — "When clicking Execute workflow"</p></div>
+</div>
+</section>
+
+<section data-s="7" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Exemples concrets</h3>
+    <div class="space-y-3">
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Relance client automatique</span><p class="text-sol-gray text-xs mt-1">Un deal dans Pipedrive est sans réponse depuis 3 jours → n8n envoie un email de relance personnalisé</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Notification de nouveau lead</span><p class="text-sol-gray text-xs mt-1">Quelqu'un remplit un formulaire sur ton site → n8n t'envoie une notification Slack avec les infos</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Publication automatique</span><p class="text-sol-gray text-xs mt-1">Tu publies un article de blog → n8n le poste automatiquement sur LinkedIn et Twitter</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Onboarding client</span><p class="text-sol-gray text-xs mt-1">Un nouveau client signe → n8n crée son dossier Notion, envoie le mail de bienvenue, ajoute au CRM</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="8" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-6">
+        <h3 class="font-bold text-lg mb-3">En résumé</h3>
+        <p class="text-sol-gray text-sm leading-relaxed">n8n c'est l'outil qui fait tourner les choses sans toi. Tu le configures une fois, et ça tourne en boucle. C'est ton troisième outil après Claude Code (construire) et Codex (déléguer).</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 9-14 : POURQUOI N8N ET PAS CLAUDE CODE -->
+<!-- ============================================================ -->
+
+<section data-s="9" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Pourquoi n8n et pas Claude Code ?</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Bonne question. Claude Code peut automatiser des trucs aussi. Alors pourquoi un autre outil ?</p>
+</div>
+</section>
+
+<section data-s="10" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Parce que les clients veulent voir.</h3>
+    <p class="text-sol-gray leading-relaxed mb-4">Quand tu livres une automatisation à un client, il veut comprendre ce qui se passe. Avec Claude Code, c'est du code dans un terminal — le client voit rien, comprend rien, fait pas confiance.</p>
+    <p class="text-sol-gray leading-relaxed mb-4">Avec n8n, le client voit le workflow. Il voit les blocs, les connexions, le flux. Il comprend : "ah ok, quand un email arrive, ça fait ça, puis ça, puis ça". C'est visuel, c'est clair, c'est rassurant.</p>
+    <p class="text-sol-gray leading-relaxed font-bold">Le visuel rassure. Et un client rassuré c'est un client qui paie et qui reste.</p>
+</div>
+</section>
+
+<section data-s="11" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Parce que tu vois les logs.</h3>
+    <p class="text-sol-gray leading-relaxed mb-4">Quand un workflow plante, tu vois exactement où et pourquoi. n8n te montre chaque étape, les données qui passent, l'erreur exacte. Tu debugges en 2 minutes.</p>
+    <p class="text-sol-gray leading-relaxed">Avec un script Claude Code, quand ça plante à 3h du matin... bonne chance pour trouver le problème. n8n te dit "étape 4, erreur 401, clé API expirée". C'est précis.</p>
+    <div class="card p-3 mt-4" style="overflow:hidden"><img src="img/n8n-executions.png" alt="n8n executions" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">L'onglet Executions — tu vois chaque exécution et son statut</p></div>
+</div>
+</section>
+
+<section data-s="12" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Parce que ça tourne H24 sans ton ordi.</h3>
+    <p class="text-sol-gray leading-relaxed">Claude Code s'arrête quand tu fermes ton terminal. n8n cloud tourne 24h/24, 7j/7, même quand ton ordi est éteint. Les relances partent à 8h du matin, les notifications arrivent le weekend, les données se synchronisent la nuit.</p>
+</div>
+</section>
+
+<section data-s="13" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left">
+        <thead><tr class="border-b-2 border-sol-deep"><th class="py-3 px-3 font-mono text-xs text-sol-gray">SITUATION</th><th class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">UTILISE</th></tr></thead>
+        <tbody>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3">Construire un site / chatbot / script</td><td class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">Claude Code</td></tr>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3">Automatiser un flux récurrent H24</td><td class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">n8n</td></tr>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3">Livrer une automatisation visible au client</td><td class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">n8n</td></tr>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3">Débugger un process qui plante</td><td class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">n8n (logs visuels)</td></tr>
+            <tr><td class="py-3 px-3">Créer le workflow avec l'IA</td><td class="py-3 px-3 font-mono text-xs" style="color:#4CC0C0">Claude Code + n8n API</td></tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+</section>
+
+<section data-s="14" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h4 class="font-bold mb-3">Le combo parfait</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">Tu utilises Claude Code pour CRÉER les workflows n8n via l'API. Tu codes pas à la main dans n8n — tu demandes à Claude Code de le faire. Et une fois le workflow créé, il tourne tout seul sur n8n cloud H24. Le meilleur des deux mondes.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 15-20 : COMBIEN ÇA COÛTE -->
+<!-- ============================================================ -->
+
+<section data-s="15" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Combien ça coûte ?</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">On utilise n8n cloud. Pas besoin de serveur, pas besoin de maintenance. Tu crées un compte, tu bosses.</p>
+</div>
+</section>
+
+<section data-s="16" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="space-y-4">
+        <div class="card p-6 ch"><div class="flex items-center justify-between mb-3"><div class="font-bold text-lg">Community (self-hosted)</div><div class="font-space font-bold text-xl" style="color:#4CC0C0">Gratuit</div></div><p class="text-sol-gray text-sm">Illimité mais tu gères ton serveur toi-même. Pas pour les débutants.</p></div>
+        <div class="card-accent p-6 ch"><div class="flex items-center justify-between mb-3"><div class="font-bold text-lg">Starter (cloud)</div><div class="font-space font-bold text-xl" style="color:#4CC0C0">24€/mois</div></div><p class="text-sol-gray text-sm">2 500 exécutions/mois. Suffisant pour commencer. C'est celui qu'on prend.</p><div class="card-light p-3 mt-2"><p class="text-sol-gray text-xs"><strong>C'est celui qu'on recommande pour la formation.</strong></p></div></div>
+        <div class="card p-6 ch"><div class="flex items-center justify-between mb-3"><div class="font-bold text-lg">Pro (cloud)</div><div class="font-space font-bold text-xl text-sol-gray">60€/mois</div></div><p class="text-sol-gray text-sm">10 000 exécutions. Pour quand tu as plusieurs clients avec des workflows actifs.</p></div>
+        <div class="card p-6 ch"><div class="flex items-center justify-between mb-3"><div class="font-bold text-lg">Enterprise</div><div class="font-space font-bold text-xl text-sol-gray">Sur devis</div></div><p class="text-sol-gray text-sm">Pour les gros volumes. Pas pour nous maintenant.</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="17" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-6">
+        <h4 class="font-bold mb-3">C'est quoi une "exécution" ?</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">Chaque fois qu'un workflow tourne du début à la fin, c'est une exécution. Un email arrive → le workflow tourne → 1 exécution. Avec 2 500/mois sur le Starter, tu peux avoir des dizaines de workflows actifs sans problème.</p>
+    </div>
+</div>
+</section>
+
+<section data-s="18" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Ce qui est inclus dans tous les plans</h3>
+    <div class="space-y-2">
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">✓ Utilisateurs illimités</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">✓ Workflows illimités</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">✓ 400+ intégrations</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">✓ Nodes IA (agents, LLM, etc.)</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">✓ Essai gratuit 14 jours (pas de carte requise)</span></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 19-25 : S'INSCRIRE + INTERFACE -->
+<!-- ============================================================ -->
+
+<section data-s="19" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">On s'inscrit.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">C'est du cloud — pas besoin d'installer quoi que ce soit. Tu crées un compte et tu bosses direct.</p>
+</div>
+</section>
+
+<section data-s="20" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Va sur <span class="code-inline">app.n8n.cloud</span></p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Clique "Sign up" — crée ton compte avec ton email</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Prends l'essai gratuit 14 jours (pas de carte)</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><p class="text-sol-gray text-sm">T'es dans le dashboard. C'est prêt.</p></div>
+    </div>
+    <div class="card p-3 mt-4" style="overflow:hidden"><img src="img/n8n-login.png" alt="n8n login" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">La page de connexion n8n cloud</p></div>
+</div>
+</section>
+
+<section data-s="21" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le dashboard</h3>
+    <p class="text-sol-gray text-sm mb-4">Voilà ce que tu vois quand tu te connectes :</p>
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-overview.png" alt="n8n dashboard" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">Le dashboard — tous tes workflows, credentials, exécutions</p></div>
+    <div class="text-sol-gray text-sm mt-4 space-y-2">
+        <p>→ <strong>Workflows</strong> — la liste de tes automatisations</p>
+        <p>→ <strong>Credentials</strong> — tes connexions aux services (Gmail, Slack, CRM...)</p>
+        <p>→ <strong>Executions</strong> — l'historique de ce qui a tourné</p>
+        <p>→ <strong>Variables</strong> — des valeurs réutilisables dans tes workflows</p>
+        <p>→ <strong>Templates</strong> — des workflows prêts à importer</p>
+    </div>
+</div>
+</section>
+
+<section data-s="22" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">L'éditeur de workflow</h3>
+    <p class="text-sol-gray text-sm mb-4">Quand tu cliques "Create workflow", voilà ce que tu vois :</p>
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-editor.png" alt="n8n editor" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">L'éditeur — un canvas vide avec "Add first step..."</p></div>
+    <p class="text-sol-gray text-sm mt-4">Un canvas blanc avec un bouton "+" au milieu. Tu cliques, tu ajoutes ton premier node. C'est aussi simple que ça.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 23-32 : LES NODES -->
+<!-- ============================================================ -->
+
+<section data-s="23" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les nodes — les briques de base.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Chaque bloc dans n8n s'appelle un "node". Y'en a des centaines. Voilà les catégories.</p>
+</div>
+</section>
+
+<section data-s="24" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3 mb-6" style="overflow:hidden"><img src="img/n8n-nodes.png" alt="n8n nodes" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">Le menu des nodes — AI, Actions, Data, Flow, Core, Human in the loop</p></div>
+    <div class="space-y-3">
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">🤖</div><div><span class="font-bold text-sm">AI</span><p class="text-sol-gray text-xs mt-1">Construire des agents autonomes, résumer des documents, chercher dans des bases de données. C'est là que tu connectes Claude, GPT, etc.</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">🌐</div><div><span class="font-bold text-sm">Action in an app</span><p class="text-sol-gray text-xs mt-1">Faire quelque chose dans une app : envoyer un email avec Gmail, poster sur Slack, ajouter une ligne dans Google Sheets, créer un contact HubSpot...</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">📊</div><div><span class="font-bold text-sm">Data transformation</span><p class="text-sol-gray text-xs mt-1">Manipuler, filtrer, convertir des données. Transformer un JSON, merger des listes, extraire des champs.</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">🔀</div><div><span class="font-bold text-sm">Flow</span><p class="text-sol-gray text-xs mt-1">Brancher, merger, boucler. "Si cette condition est vraie → fais ça, sinon → fais ça".</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">⚙️</div><div><span class="font-bold text-sm">Core</span><p class="text-sol-gray text-xs mt-1">Exécuter du code, faire des requêtes HTTP, créer des webhooks. Les briques fondamentales.</p></div></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-start gap-3"><div class="text-xl emoji">👤</div><div><span class="font-bold text-sm">Human in the loop</span><p class="text-sol-gray text-xs mt-1">Attendre une validation humaine avant de continuer. "Le client valide → on continue". Pas tout automatiser — garder l'humain quand c'est important.</p></div></div></div>
+    </div>
+</div>
+</section>
+
+<section data-s="25" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Les triggers — ce qui démarre le workflow</h3>
+    <p class="text-sol-gray text-sm mb-4">Un workflow commence toujours par un trigger. C'est l'événement qui déclenche tout.</p>
+    <div class="space-y-2">
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Webhook</span><p class="text-sol-gray text-xs mt-1">Un service externe appelle une URL → le workflow démarre</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Schedule (cron)</span><p class="text-sol-gray text-xs mt-1">"Tous les lundis à 8h" ou "toutes les 5 minutes" → le workflow tourne</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">App trigger</span><p class="text-sol-gray text-xs mt-1">"Quand un email arrive dans Gmail" ou "quand un deal change dans Pipedrive"</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Manuel</span><p class="text-sol-gray text-xs mt-1">Tu cliques "Execute workflow" — pour tester</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Chat trigger</span><p class="text-sol-gray text-xs mt-1">Quelqu'un envoie un message dans un chat → le workflow répond</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="26" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Les intégrations les plus utiles pour toi</h3>
+    <div class="grid sm:grid-cols-3 gap-3">
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Gmail</div><p class="text-sol-gray text-xs mt-1">Lire, envoyer, classer</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Slack</div><p class="text-sol-gray text-xs mt-1">Notifications, messages</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Google Sheets</div><p class="text-sol-gray text-xs mt-1">Lire, écrire, mettre à jour</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Notion</div><p class="text-sol-gray text-xs mt-1">Créer, modifier des pages</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">HubSpot</div><p class="text-sol-gray text-xs mt-1">CRM, contacts, deals</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Pipedrive</div><p class="text-sol-gray text-xs mt-1">CRM, pipeline</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">WhatsApp</div><p class="text-sol-gray text-xs mt-1">Messages, notifications</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">Anthropic (Claude)</div><p class="text-sol-gray text-xs mt-1">IA, analyse, rédaction</p></div>
+        <div class="card-light p-3 text-center ch"><div class="font-bold text-sm">HTTP Request</div><p class="text-sol-gray text-xs mt-1">Appeler n'importe quelle API</p></div>
+    </div>
+    <p class="text-sol-gray text-xs mt-4 italic">Et y'en a 400+ de plus. Si l'app existe, y'a probablement un node n8n pour.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 27-35 : AI AGENT -->
+<!-- ============================================================ -->
+
+<section data-s="27" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Le node AI Agent.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">C'est le node le plus important pour nous. Il permet de créer des agents IA directement dans n8n — connectés à Claude, avec de la mémoire, des outils, et qui raisonnent.</p>
+</div>
+</section>
+
+<section data-s="28" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-ai-agent-config.png" alt="AI Agent config" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">La configuration d'un AI Agent — prompt, chat model, memory, tools</p></div>
+</div>
+</section>
+
+<section data-s="29" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Comment ça marche</h3>
+    <p class="text-sol-gray text-sm mb-4">Le node AI Agent a 3 connexions en dessous :</p>
+    <div class="space-y-3">
+        <div class="card-accent p-5 ch"><div class="font-bold text-sm mb-2" style="color:#4CC0C0">Chat Model *</div><p class="text-sol-gray text-xs">Le cerveau. Tu connectes Claude (Anthropic), GPT (OpenAI), ou un autre LLM. C'est lui qui réfléchit.</p></div>
+        <div class="card p-5 ch"><div class="font-bold text-sm mb-2">Memory</div><p class="text-sol-gray text-xs">La mémoire. L'agent se souvient des conversations précédentes. Utile pour les chatbots qui doivent suivre le contexte.</p></div>
+        <div class="card p-5 ch"><div class="font-bold text-sm mb-2">Tool</div><p class="text-sol-gray text-xs">Les outils. L'agent peut appeler d'autres nodes n8n comme des outils : chercher dans une base de données, envoyer un email, appeler une API. C'est ça qui le rend puissant.</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="30" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Exemple : un chatbot SAV</h3>
+    <div class="code border-sol-accent">
+        <div style="color:#4CC0C0" class="mb-2 font-bold">// Le flux</div>
+        <div class="text-gray-400">Chat Trigger → AI Agent (Claude) → réponse<br><br>L'agent a accès à :<br>→ Tool "chercher dans la FAQ" (base de données)<br>→ Tool "créer un ticket" (API support)<br>→ Tool "escalader à un humain" (notification Slack)<br><br>L'agent décide tout seul quel outil utiliser selon la question du client.</div>
+    </div>
+</div>
+</section>
+
+<section data-s="31" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Les sous-nodes disponibles</h3>
+    <div class="grid sm:grid-cols-2 gap-3">
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Anthropic Chat Model</span><p class="text-sol-gray text-xs mt-1">Connecter Claude (Sonnet, Opus)</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">OpenAI Chat Model</span><p class="text-sol-gray text-xs mt-1">Connecter GPT-4, GPT-5</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Buffer Window Memory</span><p class="text-sol-gray text-xs mt-1">Mémoriser les N derniers messages</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Postgres Chat Memory</span><p class="text-sol-gray text-xs mt-1">Stocker la mémoire dans une base</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">Workflow Tool</span><p class="text-sol-gray text-xs mt-1">Appeler un autre workflow comme outil</p></div>
+        <div class="card-light p-4 ch"><span class="font-bold text-sm">HTTP Request Tool</span><p class="text-sol-gray text-xs mt-1">Appeler n'importe quelle API</p></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 32-40 : L'API N8N + CLAUDE CODE -->
+<!-- ============================================================ -->
+
+<section data-s="32" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">L'API n8n + Claude Code.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Voilà le truc qui change tout : tu peux créer des workflows n8n avec Claude Code. Tu décris ce que tu veux en français, Claude Code le construit via l'API n8n.</p>
+</div>
+</section>
+
+<section data-s="33" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3 mb-4" style="overflow:hidden"><img src="img/n8n-api.png" alt="n8n API" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">Les clés API n8n — c'est ce qui permet à Claude Code de créer des workflows</p></div>
+    <h3 class="font-space font-bold text-xl mb-4">Comment ça marche</h3>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Tu crées une clé API dans n8n (Settings → n8n API)</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Tu donnes la clé à Claude Code</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Tu dis : "Crée un workflow n8n qui envoie un email de relance quand un deal est inactif depuis 3 jours"</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><p class="text-sol-gray text-sm">Claude Code crée le workflow via l'API — il apparaît dans ton dashboard n8n</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">5</div><p class="text-sol-gray text-sm">Tu vérifies, tu ajustes si besoin, tu actives</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="34" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Le MCP n8n — encore plus simple</h3>
+    <p class="text-sol-gray text-sm mb-4">Y'a un serveur MCP pour n8n. Ça veut dire que Claude Code peut directement :</p>
+    <div class="space-y-2">
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Créer et modifier des workflows</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Chercher les bons nodes dans la bibliothèque (1 396 nodes)</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Lancer des exécutions et vérifier le statut</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Débugger les erreurs automatiquement</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Valider la structure avant de déployer</span></div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4 italic">Tu décris ton automatisation en français. Claude Code la construit dans n8n. C'est aussi simple que ça.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 35-42 : LE JSON -->
+<!-- ============================================================ -->
+
+<section data-s="35" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Le JSON — exporter et importer.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Chaque workflow n8n c'est un fichier JSON. Tu peux l'exporter, le partager, l'importer ailleurs. C'est pour ça qu'on met des JSON dans les repos GitHub — l'élève importe et c'est prêt.</p>
+</div>
+</section>
+
+<section data-s="36" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Exporter un workflow</h3>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Ouvre ton workflow dans l'éditeur</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Clique les 3 points en haut à droite → <strong>Download</strong></p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Un fichier <span class="code-inline">.json</span> se télécharge. C'est ton workflow.</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="37" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Importer un workflow</h3>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Clique les 3 points en haut à droite → <strong>Import from File</strong></p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Sélectionne le fichier JSON</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Le workflow apparaît dans ton éditeur. Tu ajustes les credentials et c'est prêt.</p></div>
+    </div>
+    <p class="text-sol-gray text-xs mt-4 italic">C'est aussi simple que ça. C'est pour ça que dans la formation, on fournit les JSON dans les repos GitHub. L'élève importe, configure ses credentials, et le workflow tourne.</p>
+</div>
+</section>
+
+<section data-s="38" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-orange p-4">
+        <div class="font-bold text-sm mb-2">Attention aux credentials</div>
+        <p class="text-sol-gray text-xs">Quand tu exportes un JSON, il contient les noms de tes credentials (pas les mots de passe, mais les noms). Si tu partages le JSON, anonymise les noms avant. Et quand tu importes un JSON d'un repo, tu dois reconfigurer tes propres credentials.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 39-50 : CRÉER TON PREMIER WORKFLOW -->
+<!-- ============================================================ -->
+
+<section data-s="39" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Créer ton premier workflow.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">On fait simple. Un workflow qui envoie une notification Slack quand tu reçois un email.</p>
+</div>
+</section>
+
+<section data-s="40" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-6">Les étapes</h3>
+    <div class="space-y-4">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><div><p class="font-bold text-sm">Ajoute un trigger : Gmail Trigger</p><p class="text-sol-gray text-xs mt-1">Quand un nouvel email arrive → le workflow démarre</p></div></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><div><p class="font-bold text-sm">Connecte Gmail</p><p class="text-sol-gray text-xs mt-1">Tu lies ton compte Gmail en cliquant "Create new credential"</p></div></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><div><p class="font-bold text-sm">Ajoute un node : Slack</p><p class="text-sol-gray text-xs mt-1">Envoyer un message dans un channel avec l'objet et l'expéditeur de l'email</p></div></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><div><p class="font-bold text-sm">Connecte Slack</p><p class="text-sol-gray text-xs mt-1">Tu lies ton workspace Slack</p></div></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">5</div><div><p class="font-bold text-sm">Teste</p><p class="text-sol-gray text-xs mt-1">Clique "Execute workflow" et envoie-toi un email de test</p></div></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent" style="border-color:#4CC0C0;color:#4CC0C0">6</div><div><p class="font-bold text-sm">Active</p><p class="text-sol-gray text-xs mt-1">Clique "Publish" — le workflow tourne H24</p></div></div>
+    </div>
+</div>
+</section>
+
+<section data-s="41" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="code border-sol-accent">
+        <div style="color:#4CC0C0" class="mb-2 font-bold">// Ce que ça donne visuellement</div>
+        <div class="text-gray-400">Gmail Trigger → Slack (Send message)<br><br>Trigger : "When a new email is received"<br>Slack : "Send to #notifications"<br>Message : "Nouvel email de {{$json.from}} : {{$json.subject}}"</div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4">2 nodes. 5 minutes. Ton premier workflow est actif. Chaque email reçu → notification Slack automatique.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 42-55 : WORKFLOWS AVANCÉS -->
+<!-- ============================================================ -->
+
+<section data-s="42" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Des workflows plus avancés.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Voilà des exemples de workflows que tu vas construire pendant la formation.</p>
+</div>
+</section>
+
+<section data-s="43" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Engagement LinkedIn automatisé</div><p class="text-sol-gray text-xs">Schedule (toutes les 2h) → Scraper les posts des prospects → Claude analyse le post → Claude rédige un commentaire pertinent → Poster le commentaire</p><p class="text-sol-gray text-xs mt-2 italic">C'est le workflow de la séance 13. Celui qui transforme ta prospection à froid en prospection à tiède.</p></div></div></section>
+
+<section data-s="44" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Assistant email connecté CRM</div><p class="text-sol-gray text-xs">Gmail Trigger (nouvel email) → Claude analyse le contenu → Appel API CRM (récupérer l'historique client) → Claude rédige une réponse → Créer un brouillon Gmail</p><p class="text-sol-gray text-xs mt-2 italic">C'est le workflow de la séance 20. Le projet à 3 000 - 6 000€.</p></div></div></section>
+
+<section data-s="45" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Automatisation CRM complète</div><p class="text-sol-gray text-xs">Webhook (nouveau contact CRM) → Enrichissement Apollo API → Claude score le lead (chaud/tiède/froid) → Si chaud : email personnalisé → Si tiède : séquence nurturing → Log dans Google Sheets</p><p class="text-sol-gray text-xs mt-2 italic">C'est le workflow de la séance 22. Tu rends le CRM du client 10x plus intelligent.</p></div></div></section>
+
+<section data-s="46" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">WhatsApp Business IA</div><p class="text-sol-gray text-xs">WhatsApp Trigger (nouveau message) → Claude analyse le message → Appel API CRM → Claude rédige une réponse personnalisée → Envoyer via WhatsApp API → Logger dans le CRM</p><p class="text-sol-gray text-xs mt-2 italic">C'est le workflow de la séance 23. Le client répond à ses clients H24.</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- 47-55 : LES CREDENTIALS -->
+<!-- ============================================================ -->
+
+<section data-s="47" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les credentials.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Pour que n8n puisse accéder à Gmail, Slack, un CRM, Claude — il a besoin de tes identifiants. C'est ce qu'on appelle les "credentials".</p>
+</div>
+</section>
+
+<section data-s="48" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Comment les configurer</h3>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Quand tu ajoutes un node (ex: Gmail), il te demande un credential</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Clique "Create new credential"</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Pour la plupart des services (Gmail, Slack), ça ouvre une fenêtre OAuth — tu te connectes et c'est fait</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><p class="text-sol-gray text-sm">Pour les API (Claude, Apollo), tu colles ta clé API</p></div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4 italic">Tu le fais une seule fois par service. Après, tous tes workflows utilisent le même credential.</p>
+</div>
+</section>
+
+<section data-s="49" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Connecter Claude à n8n</h3>
+    <p class="text-sol-gray text-sm mb-4">Pour utiliser le node AI Agent avec Claude :</p>
+    <div class="space-y-3">
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">1</div><p class="text-sol-gray text-sm">Ajoute un node "Anthropic Chat Model"</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">2</div><p class="text-sol-gray text-sm">Crée un credential → colle ta clé API Anthropic</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">3</div><p class="text-sol-gray text-sm">Choisis le modèle (Sonnet 4.6, Opus 4.6)</p></div>
+        <div class="flex items-start gap-4"><div class="step border-sol-accent text-sol-accent">4</div><p class="text-sol-gray text-sm">Connecte-le sous le node AI Agent → "Chat Model"</p></div>
+    </div>
+    <p class="text-sol-gray text-sm mt-4">C'est fait. Ton agent IA utilise Claude. Il pense, il raisonne, il agit.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 50-60 : EXECUTIONS + LOGS -->
+<!-- ============================================================ -->
+
+<section data-s="50" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les exécutions et les logs.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Chaque fois qu'un workflow tourne, n8n enregistre tout. Tu vois exactement ce qui s'est passé, étape par étape.</p>
+</div>
+</section>
+
+<section data-s="51" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-3" style="overflow:hidden"><img src="img/n8n-executions.png" alt="Executions" class="w-full rounded" style="border:1px solid #e8edf2" loading="lazy"><p class="text-sol-gray text-xs mt-2 text-center italic">L'onglet Executions — chaque exécution est enregistrée</p></div>
+    <div class="text-sol-gray text-sm mt-4 space-y-2">
+        <p>→ <strong>Succès</strong> (vert) — le workflow a tourné sans erreur</p>
+        <p>→ <strong>Erreur</strong> (rouge) — quelque chose a planté. Tu cliques dessus pour voir où et pourquoi.</p>
+        <p>→ <strong>Données</strong> — tu vois les données qui sont passées dans chaque node</p>
+    </div>
+</div>
+</section>
+
+<section data-s="52" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-green p-6">
+        <h4 class="font-bold mb-3">Pourquoi c'est important</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">Quand tu livres un workflow à un client et que ça plante à 3h du matin, tu ouvres n8n le lendemain et tu vois exactement : "Exécution de 3h12 — erreur au node 4 — code 401 — clé API expirée". Tu corriges en 2 minutes. Avec du code brut, c'est impossible d'avoir cette visibilité.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 53-60 : TEMPLATES + BONNES PRATIQUES -->
+<!-- ============================================================ -->
+
+<section data-s="53" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les templates.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">n8n a une bibliothèque de templates — des workflows prêts à importer. Tu cliques, tu importes, tu ajustes tes credentials, c'est prêt.</p>
+</div>
+</section>
+
+<section data-s="54" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <p class="text-sol-gray text-sm mb-4">Dans le menu de gauche, clique sur "Templates". Tu vas trouver des workflows pour :</p>
+    <div class="space-y-2">
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Chatbots IA avec Claude ou GPT</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Synchronisation CRM</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Publication automatique sur les réseaux</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Traitement de factures</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Notifications multi-canal</span></div>
+        <div class="card-light p-4 ch"><span class="text-sol-gray text-sm">→ Backup automatique de données</span></div>
+    </div>
+    <p class="text-sol-gray text-xs mt-4 italic">C'est un bon moyen d'apprendre. Tu importes un template, tu l'étudies, tu comprends comment c'est fait, tu l'adaptes.</p>
+</div>
+</section>
+
+<section data-s="55" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les bonnes pratiques.</h2>
+</div>
+</section>
+
+<section data-s="56" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Nomme tes workflows clairement</h4><p class="text-sol-gray text-sm">"Suivi Teliway V13" c'est bien. "My workflow 2" c'est pas bien. Quand t'as 20 workflows, tu dois savoir lequel fait quoi d'un coup d'oeil.</p></div></div></section>
+
+<section data-s="57" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Teste avant d'activer</h4><p class="text-sol-gray text-sm">Clique toujours "Execute workflow" avec des données de test avant de cliquer "Publish". Tu veux pas envoyer 500 emails de relance par erreur.</p></div></div></section>
+
+<section data-s="58" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Utilise les notes</h4><p class="text-sol-gray text-sm">Tu peux ajouter des notes/sticky notes sur le canvas pour expliquer ce que fait chaque partie. Utile quand tu reviens dessus 3 mois plus tard. Ou quand le client veut comprendre.</p></div></div></section>
+
+<section data-s="59" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold mb-2">Un workflow = un process</h4><p class="text-sol-gray text-sm">Fais pas un mega-workflow qui fait 15 trucs. Découpe. Un workflow par process. Plus facile à maintenir, débugger, et expliquer au client.</p></div></div></section>
+
+<section data-s="60" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-green p-5 ch"><h4 class="font-bold mb-2">Sauvegarde tes workflows en JSON</h4><p class="text-sol-gray text-sm">Exporte régulièrement tes workflows en JSON et mets-les sur GitHub. Si un truc plante ou si tu perds ton compte, tu peux tout réimporter.</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- 61-75 : LES COMMANDES / RACCOURCIS -->
+<!-- ============================================================ -->
+
+<section data-s="61" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les raccourcis et commandes.</h2>
+</div>
+</section>
+
+<section data-s="62" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="space-y-3">
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">Tab</span><span class="text-sol-gray text-sm">Ouvrir le panneau de nodes</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">Ctrl+S</span><span class="text-sol-gray text-sm">Sauvegarder le workflow</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">Ctrl+A</span><span class="text-sol-gray text-sm">Sélectionner tous les nodes</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">Ctrl+C / Ctrl+V</span><span class="text-sol-gray text-sm">Copier / coller des nodes (ou un workflow JSON)</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">Delete</span><span class="text-sol-gray text-sm">Supprimer un node</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">D</span><span class="text-sol-gray text-sm">Désactiver un node (il reste mais ne s'exécute pas)</span></div></div>
+        <div class="card-light p-4 ch"><div class="flex items-center gap-3"><span class="code-inline">+</span><span class="text-sol-gray text-sm">Ajouter un node après le node sélectionné</span></div></div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 63-75 : EXEMPLES DE PROMPTS CLAUDE CODE → N8N -->
+<!-- ============================================================ -->
+
+<section data-s="63" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Exemples : demander à Claude Code de créer des workflows.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Voilà des vrais prompts que tu peux donner à Claude Code pour créer des workflows n8n via l'API.</p>
+</div>
+</section>
+
+<section data-s="64" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Relance email automatique</div><div class="cmd mt-2">Crée un workflow n8n : Schedule trigger tous les matins à 8h → récupère les deals Pipedrive sans réponse depuis 3 jours → pour chaque deal, Claude rédige un email de relance personnalisé → envoie via Gmail → log dans Google Sheets</div></div></div></section>
+
+<section data-s="65" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Notification nouveau lead</div><div class="cmd mt-2">Crée un workflow n8n : Webhook trigger → quand un formulaire est soumis sur mon site → extraire nom, email, message → envoyer une notification Slack dans #leads → ajouter le contact dans HubSpot → envoyer un email de confirmation au lead</div></div></div></section>
+
+<section data-s="66" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Chatbot WhatsApp</div><div class="cmd mt-2">Crée un workflow n8n : WhatsApp trigger → AI Agent avec Claude Sonnet → l'agent a accès à un tool "chercher dans la FAQ" (Google Sheets) et un tool "créer un ticket" (HTTP Request vers Zendesk) → répondre sur WhatsApp</div></div></div></section>
+
+<section data-s="67" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card p-5 ch"><div class="font-bold text-sm mb-2">Scoring de leads</div><div class="cmd mt-2">Crée un workflow n8n : HubSpot trigger (nouveau contact) → enrichir via Apollo API → Claude analyse et score le lead (chaud/tiède/froid) → si chaud : email auto + notification Slack → si tiède : ajouter à séquence nurturing → mettre à jour le champ "score" dans HubSpot</div></div></div></section>
+
+<!-- ============================================================ -->
+<!-- 68-80 : LES LIMITES + SÉCURITÉ -->
+<!-- ============================================================ -->
+
+<section data-s="68" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les limites.</h2>
+</div>
+</section>
+
+<section data-s="69" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Le nombre d'exécutions</h4><p class="text-sol-gray text-sm">Sur le Starter à 24€/mois t'as 2 500 exécutions. Si tu as beaucoup de workflows actifs pour plusieurs clients, tu peux atteindre la limite. Surveille dans Settings → Usage and plan.</p></div></div></section>
+
+<section data-s="70" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Les workflows complexes peuvent planter</h4><p class="text-sol-gray text-sm">Plus un workflow a de nodes, plus il y a de chances qu'un truc casse. Découpe en sous-workflows. Un process = un workflow.</p></div></div></section>
+
+<section data-s="71" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-orange p-6 ch"><h4 class="font-bold mb-2">Les credentials expirent</h4><p class="text-sol-gray text-sm">Les tokens OAuth (Gmail, Slack) expirent parfois. Tu dois les reconnecter. Surveille tes exécutions — si tu vois des erreurs 401, c'est probablement ça.</p></div></div></section>
+
+<section data-s="72" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-green p-6 ch"><h4 class="font-bold mb-2">La bonne pratique</h4><p class="text-sol-gray text-sm">Teste toujours avec des données réelles avant de publier. Active les notifications d'erreur par email. Et vérifie tes exécutions au moins une fois par semaine.</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- 73-85 : QUAND UTILISER N8N -->
+<!-- ============================================================ -->
+
+<section data-s="73" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Quand utiliser n8n dans la formation.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">n8n revient dans 3 séances de l'Acte 3 (les projets clients) + dans ta stratégie LinkedIn (Acte 2).</p>
+</div>
+</section>
+
+<section data-s="74" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="space-y-3">
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 13</span><p class="text-sol-gray text-xs mt-1">Engagement LinkedIn automatisé</p></div><span class="text-sol-gray text-xs font-mono">n8n + Claude Code</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 20</span><p class="text-sol-gray text-xs mt-1">Assistant email connecté au logiciel du client</p></div><span class="text-sol-gray text-xs font-mono">n8n + Claude API</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 22</span><p class="text-sol-gray text-xs mt-1">Automatisation CRM complète</p></div><span class="text-sol-gray text-xs font-mono">n8n + Claude API</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 23</span><p class="text-sol-gray text-xs mt-1">WhatsApp Business IA</p></div><span class="text-sol-gray text-xs font-mono">n8n + WhatsApp API</span></div></div>
+    </div>
+    <p class="text-sol-gray text-xs mt-4 italic">Chaque fois, le JSON du workflow est dans le repo GitHub. L'élève importe et adapte.</p>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 75-90 : CE QU'IL FAUT RETENIR + CHEATSHEET -->
+<!-- ============================================================ -->
+
+<section data-s="75" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl mb-6">Ce qu'il faut retenir.</h2>
+    <div class="space-y-3">
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">n8n c'est de l'automatisation visuelle — tu connectes des blocs</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">400+ intégrations — Gmail, Slack, CRM, WhatsApp, Claude...</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Le node AI Agent connecte Claude avec des outils et de la mémoire</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Claude Code peut créer des workflows n8n via l'API ou le MCP</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Les workflows s'exportent en JSON — on les met dans les repos GitHub</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">n8n cloud tourne H24 même quand ton ordi est éteint</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Les logs montrent exactement ce qui marche et ce qui plante</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Les clients préfèrent n8n parce que c'est visuel et rassurant</span></div>
+        <div class="flex items-center gap-3"><span style="color:#4CC0C0" class="text-lg">✓</span><span class="text-sol-gray">Starter à 24€/mois — essai gratuit 14 jours</span></div>
+    </div>
+</div>
+</section>
+
+<section data-s="76" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-2xl mb-6">Cheatsheet n8n.</h2>
+    <div class="code border-sol-accent">
+        <div style="color:#4CC0C0" class="mb-3 font-bold">// n8n — Cheatsheet</div>
+        <div class="text-gray-400 space-y-2">
+            <p>S'INSCRIRE</p>
+            <p>  app.n8n.cloud → Sign up → Essai gratuit 14j</p>
+            <p></p>
+            <p>PRIX</p>
+            <p>  Starter 24€/mois (2 500 exécutions)</p>
+            <p>  Pro 60€/mois (10 000 exécutions)</p>
+            <p></p>
+            <p>NODES CLÉS</p>
+            <p>  AI Agent → agents IA avec Claude</p>
+            <p>  HTTP Request → appeler n'importe quelle API</p>
+            <p>  Webhook → recevoir des données externes</p>
+            <p>  Schedule → exécuter à intervalles réguliers</p>
+            <p></p>
+            <p>RACCOURCIS</p>
+            <p>  Tab → ouvrir les nodes</p>
+            <p>  Ctrl+S → sauvegarder</p>
+            <p>  Ctrl+C/V → copier/coller</p>
+            <p>  D → désactiver un node</p>
+            <p></p>
+            <p>JSON</p>
+            <p>  Exporter : 3 dots → Download</p>
+            <p>  Importer : 3 dots → Import from File</p>
+            <p></p>
+            <p>AVEC CLAUDE CODE</p>
+            <p>  API : Settings → n8n API → Create key</p>
+            <p>  MCP : n8n-mcp server pour accès direct</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 77-90 : COMPARATIF + LA SUITE -->
+<!-- ============================================================ -->
+
+<section data-s="77" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les 3 outils ensemble.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Tu connais maintenant 3 outils sur 4. Voilà comment ils se complètent.</p>
+</div>
+</section>
+
+<section data-s="78" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left">
+        <thead><tr class="border-b-2 border-sol-deep"><th class="py-3 px-3 font-mono text-xs text-sol-gray">OUTIL</th><th class="py-3 px-3 font-mono text-xs text-sol-gray">QUAND</th><th class="py-3 px-3 font-mono text-xs text-sol-gray">COMMENT</th></tr></thead>
+        <tbody>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3 font-bold" style="color:#4CC0C0">Claude Code</td><td class="py-3 px-3 text-sol-gray">Construire en direct</td><td class="py-3 px-3 text-sol-gray text-xs">Sites, chatbots, scripts, scraping</td></tr>
+            <tr class="border-b border-sol-lightgray"><td class="py-3 px-3 font-bold" style="color:#30D9DE">Codex</td><td class="py-3 px-3 text-sol-gray">Déléguer en autonomie</td><td class="py-3 px-3 text-sol-gray text-xs">Projets complets, refactoring, tests</td></tr>
+            <tr><td class="py-3 px-3 font-bold" style="color:#4CC0C0">n8n</td><td class="py-3 px-3 text-sol-gray">Automatiser en boucle H24</td><td class="py-3 px-3 text-sol-gray text-xs">Relances, notifications, flux, agents IA</td></tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+</section>
+
+<section data-s="79" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h4 class="font-bold mb-3">Le workflow parfait</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">Tu utilises <strong>Claude Code</strong> pour créer le workflow n8n via l'API. <strong>Codex</strong> construit le chatbot en parallèle. <strong>n8n</strong> fait tourner le tout H24. Les trois outils ensemble, tu livres un projet complet en un temps record.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 80-90 : LA SUITE -->
+<!-- ============================================================ -->
+
+<section data-s="80" class="py-16">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-2xl mb-4">La suite</h2>
+    <p class="text-sol-gray leading-relaxed mb-6">Plus qu'un outil à découvrir : Claude Cowork.</p>
+    <div class="space-y-3">
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 1</span> — Claude Code</div><span class="tag border-sol-accent text-sol-accent text-xs">Fait ✓</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 2</span> — Codex</div><span class="tag border-sol-accent text-sol-accent text-xs">Fait ✓</span></div></div>
+        <div class="card-light p-4" style="border-color:#4CC0C0"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 3</span> — n8n</div><span class="tag text-xs" style="border-color:#4CC0C0;color:#4CC0C0">Fait ✓</span></div></div>
+        <div class="card-light p-4"><div class="flex items-center justify-between"><div><span class="font-bold text-sm">Séance 4</span> — Claude Cowork</div><span class="tag border-sol-accent text-sol-accent text-xs">Prochaine</span></div></div>
+    </div>
+</div>
+</section>
+
+<section data-s="81" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h3 class="font-bold text-lg mb-3">Un truc à faire avant la séance 4</h3>
+        <p class="text-sol-gray text-sm leading-relaxed">Crée ton compte n8n cloud (essai gratuit 14 jours). Crée ton premier workflow — même un truc basique genre "Schedule toutes les heures → HTTP Request vers une API météo → Slack notification". Le but c'est de comprendre la logique trigger → action.</p>
+    </div>
+</div>
+</section>
+
+<section data-s="82" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-6">
+        <h4 class="font-bold mb-3">Si t'es bloqué</h4>
+        <div class="text-sol-gray text-sm space-y-2">
+            <p>→ Regarde la vidéo de cette séance</p>
+            <p>→ Relis cette présentation</p>
+            <p>→ Pose ta question sur le Slack</p>
+            <p>→ Clone le repo <span class="code-inline">denem-n8n</span> et importe les JSON</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<section data-s="83" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card p-6 border-l-4" style="border-left-color:#4CC0C0">
+        <h4 class="font-bold mb-3">Récap des 3 premières séances</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">T'as maintenant 3 outils. <strong style="color:#4CC0C0">Claude Code</strong> pour construire en direct. <strong style="color:#30D9DE">Codex</strong> pour déléguer en autonomie. <strong style="color:#4CC0C0">n8n</strong> pour automatiser en boucle. Et Claude Code peut créer des workflows n8n via l'API. Les trois ensemble, t'es équipé pour construire n'importe quoi.</p>
+    </div>
+</div>
+</section>
+
+<!-- ============================================================ -->
+<!-- 84-100 : EXEMPLES AVANCÉS + RÉCAPS -->
+<!-- ============================================================ -->
+
+<section data-s="84" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Des exemples avancés pour aller plus loin.</h2>
+    <p class="text-sol-gray text-lg leading-relaxed">Si tu veux explorer, voilà des idées de workflows que tu peux essayer de construire.</p>
+</div>
+</section>
+
+<section data-s="85" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold text-sm mb-2">Veille concurrentielle automatisée</h4><p class="text-sol-gray text-xs">Schedule (1x/jour) → HTTP Request (scraper les sites concurrents) → Claude compare les changements → Si changement détecté → email avec le résumé</p></div></div></section>
+
+<section data-s="86" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold text-sm mb-2">Traitement automatique de factures</h4><p class="text-sol-gray text-xs">Gmail trigger (pièce jointe PDF) → Extraire le texte → Claude parse les infos (montant, date, fournisseur) → Ajouter dans Google Sheets → Notification Slack</p></div></div></section>
+
+<section data-s="87" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold text-sm mb-2">Résumé de réunion automatique</h4><p class="text-sol-gray text-xs">Webhook (Fireflies envoie la transcription) → Claude résume en 5 bullet points → Extraire les actions → Créer des tâches Notion → Envoyer le résumé par email à tous les participants</p></div></div></section>
+
+<section data-s="88" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold text-sm mb-2">Génération de contenu automatisée</h4><p class="text-sol-gray text-xs">Schedule (1x/semaine) → Google Sheets (récupérer les sujets de la semaine) → Claude rédige un article de blog → Claude crée un post LinkedIn → Publier sur WordPress → Poster sur LinkedIn</p></div></div></section>
+
+<section data-s="89" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-5 ch"><h4 class="font-bold text-sm mb-2">Monitoring de réputation</h4><p class="text-sol-gray text-xs">Schedule (toutes les heures) → HTTP Request (scraper les avis Google) → Claude analyse le sentiment → Si avis négatif → notification Slack immédiate + Claude rédige une réponse → Poster la réponse via l'API</p></div></div></section>
+
+<!-- ============================================================ -->
+<!-- 90-100 : FIN -->
+<!-- ============================================================ -->
+
+<section data-s="90" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-6">Les intégrations à connaître.</h2>
+    <p class="text-sol-gray leading-relaxed">Les 400+ intégrations de n8n, y'en a une poignée que tu vas utiliser tous les jours.</p>
+</div>
+</section>
+
+<section data-s="91" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="grid sm:grid-cols-2 gap-3">
+        <div class="card p-4 ch"><span class="font-bold text-sm">Anthropic (Claude)</span><p class="text-sol-gray text-xs mt-1">Le cerveau de tes agents IA. Analyse, rédaction, raisonnement.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Gmail / Outlook</span><p class="text-sol-gray text-xs mt-1">Trigger sur email + envoi. Base de toute automatisation email.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Slack / Discord</span><p class="text-sol-gray text-xs mt-1">Notifications en temps réel. Le canal d'alerte de tes workflows.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Google Sheets</span><p class="text-sol-gray text-xs mt-1">La base de données du pauvre — mais ça marche. Logs, données, exports.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">HubSpot / Pipedrive</span><p class="text-sol-gray text-xs mt-1">CRM. Contacts, deals, enrichissement, scoring.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Notion</span><p class="text-sol-gray text-xs mt-1">Créer des pages, mettre à jour des bases de données.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">WhatsApp Business</span><p class="text-sol-gray text-xs mt-1">Messages, chatbot, qualification de leads.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">HTTP Request</span><p class="text-sol-gray text-xs mt-1">Le couteau suisse — appeler n'importe quelle API qui existe.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Webhook</span><p class="text-sol-gray text-xs mt-1">Recevoir des données de n'importe quel service externe.</p></div>
+        <div class="card p-4 ch"><span class="font-bold text-sm">Schedule</span><p class="text-sol-gray text-xs mt-1">Déclencher à intervalles : toutes les heures, tous les jours, tous les lundis.</p></div>
+    </div>
+</div>
+</section>
+
+<section data-s="92" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <h3 class="font-space font-bold text-xl mb-4">Et aussi...</h3>
+    <div class="text-sol-gray text-sm space-y-1">
+        <p>→ Stripe (paiements) → Typeform (formulaires) → Calendly (rendez-vous)</p>
+        <p>→ Airtable (bases de données) → Trello (gestion de projet) → Jira (tickets)</p>
+        <p>→ Twilio (SMS) → SendGrid (emails transactionnels) → WordPress (blog)</p>
+        <p>→ Shopify (e-commerce) → Zendesk (support) → Intercom (chat)</p>
+    </div>
+    <p class="text-sol-gray text-xs mt-4 italic">Si l'outil existe, y'a probablement un node n8n pour. Et sinon, y'a HTTP Request.</p>
+</div>
+</section>
+
+<section data-s="93" class="py-16">
+<div class="max-w-3xl mx-auto px-4 sr">
+    <div class="card-accent p-6">
+        <h4 class="font-bold mb-3">Le truc à retenir</h4>
+        <p class="text-sol-gray text-sm leading-relaxed">n8n c'est pas juste un outil d'automatisation. C'est ce qui te permet de livrer des solutions professionnelles à tes clients. Le client voit le workflow, comprend ce qui se passe, voit les logs. C'est ce qui fait la différence entre un "script qui tourne quelque part" et un "système professionnel que le client peut superviser".</p>
+    </div>
+</div>
+</section>
+
+<section data-s="94" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-4 text-center text-xs text-sol-gray">Claude Code → construit</div></div></section>
+<section data-s="95" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-4 text-center text-xs text-sol-gray">Codex → délègue en autonomie</div></div></section>
+<section data-s="96" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-4 text-center text-xs text-sol-gray" style="border-color:#4CC0C0">n8n → automatise en boucle H24</div></div></section>
+<section data-s="97" class="py-8"><div class="max-w-3xl mx-auto px-4 sr"><div class="card-light p-4 text-center text-xs text-sol-gray">Claude Cowork → analyse et produit des documents (séance 4)</div></div></section>
+
+<section data-s="98" class="py-20">
+<div class="max-w-3xl mx-auto px-4 sr text-center">
+    <h2 class="font-space font-bold text-3xl sm:text-4xl mb-4">Fin de la séance 3.</h2>
+    <p class="text-sol-gray text-lg mb-2">Tu sais ce que c'est, pourquoi c'est différent de Claude Code, comment t'inscrire, comment créer des workflows, les nodes, l'AI Agent, l'API, le JSON, et les bonnes pratiques.</p>
+    <p class="text-sol-gray">On se retrouve en séance 4 pour Claude Cowork.</p>
+</div>
+</section>
+
+<section data-s="99" class="py-12">
+<div class="max-w-3xl mx-auto px-4 sr text-center">
+    <div class="inline-block p-1 gradient-bg"><div class="px-8 py-4 bg-white"><span class="font-space font-bold text-xl gradient-text">DENEM Academy</span></div></div>
+    <p class="text-sol-gray text-xs mt-6 font-mono">Séance 3 — n8n — Acte 1 : Maîtriser</p>
+</div>
+</section>
+
+<section data-s="100" class="py-4"></section>
+
+<div class="py-16"></div>
+<footer class="py-8 border-t border-sol-lightgray">
+<div class="max-w-5xl mx-auto px-4 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+        <img src="logo-denem.jpeg" alt="DENEM" class="w-6 h-6 rounded">
+        <span class="font-space font-bold text-sm">DENEM Academy</span>
+    </div>
+    <span class="text-xs text-sol-gray font-mono">Séance 03 / 24</span>
+</div>
+</footer>
+
+
+<!-- JS -->
+<script>
+// ==========================================
+// Progress bar (smooth)
+// ==========================================
+window.addEventListener('scroll',()=>{
+    const s=window.scrollY,d=document.documentElement.scrollHeight-window.innerHeight;
+    document.getElementById('pb').style.width=(s/d)*100+'%';
+    // Nav shadow on scroll
+    document.querySelector('nav').classList.toggle('scrolled',s>50);
+});
+
+// ==========================================
+// Scroll reveal (multiple types)
+// ==========================================
+const ro=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sr,.sr-left,.sr-right,.sr-scale,.stagger-list,.reveal-line').forEach(e=>ro.observe(e));
+
+// ==========================================
+// Section counter
+// ==========================================
+const allS=document.querySelectorAll('[data-s]'),sc=document.getElementById('sc');
+const sco=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){sc.textContent=x.target.dataset.s+' / 100';sc.style.transform='scale(1.1)';setTimeout(()=>sc.style.transform='scale(1)',200)}})},{threshold:.3});
+allS.forEach(s=>sco.observe(s));
+
+// ==========================================
+// Card 3D tilt
+// ==========================================
+document.querySelectorAll('.ch,.ch-tilt').forEach(c=>{
+    c.addEventListener('mousemove',e=>{
+        const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+        const rotX=(y-r.height/2)/30,rotY=(r.width/2-x)/30;
+        c.style.transform=`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+    });
+    c.addEventListener('mouseleave',()=>{c.style.transform='';});
+});
+
+// ==========================================
+// Cursor glow (follows mouse smoothly)
+// ==========================================
+const cg=document.getElementById('cg');
+let mx=0,my=0,gx=0,gy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;const cc=document.getElementById('cc');if(cc)cc.style.transform='translate('+(e.clientX-16)+'px,'+(e.clientY-16)+'px)';});
+(function ag(){gx+=(mx-gx)*.06;gy+=(my-gy)*.06;if(cg)cg.style.transform=`translate(${gx-150}px,${gy-150}px)`;requestAnimationFrame(ag)})();
+
+// ==========================================
+// Magnetic effect on tags/buttons
+// ==========================================
+document.querySelectorAll('.magnetic,.tag,.tb').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left-r.width/2)*.15;
+        const y=(e.clientY-r.top-r.height/2)*.15;
+        el.style.transform=`translate(${x}px,${y}px)`;
+    });
+    el.addEventListener('mouseleave',()=>{el.style.transform='';});
+});
+
+// ==========================================
+// Terminal typing animation on hover
+// ==========================================
+document.querySelectorAll('.terminal').forEach(t=>{
+    t.addEventListener('mouseenter',()=>{
+        t.querySelectorAll('.terminal-output').forEach((line,i)=>{
+            line.style.opacity='0';line.style.transform='translateX(-5px)';
+            setTimeout(()=>{line.style.transition='all .3s ease';line.style.opacity='1';line.style.transform='translateX(0)'},i*80);
+        });
+    });
+});
+
+// ==========================================
+// Cmd copy to clipboard on click
+// ==========================================
+document.querySelectorAll('.cmd').forEach(cmd=>{
+    cmd.addEventListener('click',()=>{
+        const text=cmd.textContent.replace('$','').replace('cliquer pour copier','').replace('copié !','').trim();
+        navigator.clipboard.writeText(text);
+        cmd.classList.add('copied');
+        setTimeout(()=>cmd.classList.remove('copied'),1500);
+    });
+});
+
+// Aussi rendre les code-inline copiables
+document.querySelectorAll('.code-inline').forEach(ci=>{
+    ci.style.cursor='pointer';
+    ci.title='Clique pour copier';
+    ci.addEventListener('click',()=>{
+        navigator.clipboard.writeText(ci.textContent.trim());
+        const orig=ci.style.background;
+        ci.style.background='#4CC0C0';ci.style.color='#fff';
+        setTimeout(()=>{ci.style.background=orig;ci.style.color=''},600);
+    });
+});
+
+// ==========================================
+// Parallax on floating elements
+// ==========================================
+window.addEventListener('scroll',()=>{
+    const s=window.scrollY;
+    document.querySelectorAll('.animate-float,.animate-float-slow,.animate-float-reverse').forEach((el,i)=>{
+        const speed=.02+i*.01;
+        el.style.transform=`translateY(${Math.sin(s*speed)*15}px) rotate(${Math.sin(s*speed)*3}deg)`;
+    });
+});
+
+// ==========================================
+// Easter egg: Konami code
+// ==========================================
+let kc=[];const ks=[38,38,40,40,37,39,37,39,66,65];
+document.addEventListener('keydown',e=>{
+    kc.push(e.keyCode);if(kc.length>ks.length)kc.shift();
+    if(JSON.stringify(kc)===JSON.stringify(ks)){
+        document.body.style.transition='filter 1s';
+        document.body.style.filter='hue-rotate(180deg)';
+        setTimeout(()=>document.body.style.filter='none',3000);
+    }
+});
+
+// ==========================================
+// Easter egg: triple click on logo
+// ==========================================
+let lc=0;
+document.querySelector('nav .rounded')?.addEventListener('click',()=>{
+    lc++;
+    if(lc===3){
+        document.querySelector('nav .rounded').style.transition='all .5s';
+        document.querySelector('nav .rounded').style.transform='rotate(360deg) scale(1.3)';
+        document.querySelector('nav .rounded').style.background='#4CC0C0';
+        setTimeout(()=>{
+            document.querySelector('nav .rounded').style.transform='';
+            document.querySelector('nav .rounded').style.background='';
+        },1000);
+        lc=0;
+    }
+});
+
+// ==========================================
+// Smooth appear for emojis
+// ==========================================
+document.querySelectorAll('.emoji').forEach(em=>{
+    em.addEventListener('mouseenter',()=>{em.style.transform='scale(1.3) rotate(-8deg)';});
+    em.addEventListener('mouseleave',()=>{em.style.transform='';});
+});
+</script>
+</body>
+</html>
