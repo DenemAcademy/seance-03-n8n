@@ -52,11 +52,32 @@
             n8n, workflows, nodes, API et MCP
           </h1>
           <p class="mt-6 max-w-2xl text-xl leading-9 text-slate-700">
-            Dans cette séance, on part de zéro : ce qu’est n8n, comment lire son interface, comment construire une automatisation utile, puis comment connecter Claude Code et Codex avec MCP ou avec l’API n8n.
+            Dans cette séance, on part de zéro : ce qu’est n8n, pourquoi on l’utilise quand un client veut une automatisation visuelle, comment lire les nodes, comment comprendre le JSON, puis comment connecter Claude Code et Codex avec MCP ou avec l’API n8n.
+          </p>
+          <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-700">
+            Le point important : n8n reste un outil dense. L’objectif n’est pas de tout connaître par cœur dès maintenant. L’objectif est de comprendre assez bien le fonctionnement pour demander ensuite à Codex ou Claude Code de créer, corriger et expliquer un workflow propre.
           </p>
           <div class="mt-8 border-2 border-slate-950 bg-violet-50 p-5 shadow-neo">
             <p class="font-mono text-xs font-black uppercase tracking-[.16em] text-violet-700">Fil rouge</p>
             <p class="mt-3 leading-8 text-slate-800">Une demande client arrive depuis un formulaire. n8n la vérifie, prépare une réponse, alerte l’équipe, enregistre une trace, puis laisse une execution lisible pour vérifier.</p>
+          </div>
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <div class="border-2 border-slate-950 bg-white p-4 shadow-neo-sm">
+              <p class="font-mono text-[11px] font-black uppercase tracking-[.14em] text-blue-700">1 · Comprendre</p>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">Pourquoi n8n sert à montrer un processus client étape par étape.</p>
+            </div>
+            <div class="border-2 border-slate-950 bg-white p-4 shadow-neo-sm">
+              <p class="font-mono text-[11px] font-black uppercase tracking-[.14em] text-violet-700">2 · Nodes</p>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">Trigger, action, logique, IA, erreur : chaque node a un rôle simple.</p>
+            </div>
+            <div class="border-2 border-slate-950 bg-white p-4 shadow-neo-sm">
+              <p class="font-mono text-[11px] font-black uppercase tracking-[.14em] text-cyan-700">3 · JSON</p>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">Lire les champs qui entrent et sortent avant de corriger un workflow.</p>
+            </div>
+            <div class="border-2 border-slate-950 bg-white p-4 shadow-neo-sm">
+              <p class="font-mono text-[11px] font-black uppercase tracking-[.14em] text-emerald-700">4 · Agents</p>
+              <p class="mt-2 text-sm font-semibold leading-6 text-slate-700">API pour créer/modifier, MCP pour utiliser des outils exposés.</p>
+            </div>
           </div>
         </div>
         <figure class="border-2 border-slate-950 bg-white p-3 shadow-neo">
@@ -75,7 +96,7 @@
               <span class="font-mono text-xs font-black text-slate-500">01-10</span>
             </div>
             <h3 class="mt-5 text-2xl font-black leading-tight text-slate-950">Acte 1 · Comprendre n8n</h3>
-            <p class="mt-3 text-sm leading-7 text-slate-600">On pose les mots simples avant de toucher au canvas. Le fil rouge est une demande client qui arrive et qui doit être traitée sans perdre d’information.</p>
+            <p class="mt-3 text-sm leading-7 text-slate-600">On pose les mots simples avant de toucher au canvas. Le point important de cette séance : n8n est dense, son apprentissage prend du temps, donc on cherche d’abord à comprendre la logique générale pour ensuite guider Codex ou Claude Code.</p>
           </a>
         
           <a href="#section-11" class="group border-2 border-slate-950 bg-white p-5 shadow-neo transition hover:-translate-y-1 hover:bg-blue-50">
@@ -156,7 +177,7 @@
         <a href="https://docs.n8n.io/" target="_blank" rel="noreferrer" class="border-2 border-slate-950 bg-white px-3 py-1 font-mono text-xs font-black uppercase tracking-[.14em] text-blue-700 shadow-neo-sm transition hover:-translate-y-0.5">Source</a>
       </div>
       <h2 class="mt-6 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-slate-950 md:text-6xl">n8n en phrase simple</h2>
-      <p class="mt-5 text-lg leading-8 text-slate-700">n8n est un outil d’automatisation visuelle. Il relie des services entre eux : formulaire, email, Slack, Notion, CRM, API, IA. Une action arrive, n8n la reçoit, applique une logique, puis déclenche la suite. L’idée n’est pas de remplacer votre jugement. L’idée est d’éviter de refaire chaque jour les mêmes gestes manuels.</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700">n8n est un outil d’automatisation visuelle. Il relie des services entre eux : formulaire, email, Slack, Notion, CRM, API, IA. Une action arrive, n8n la reçoit, applique une logique, puis déclenche la suite. C’est utile quand un client veut une automatisation visible, contrôlable et modifiable sans cacher tout le travail dans du code.</p>
     
       <div class="border-2 border-slate-950 bg-violet-50 p-5 shadow-neo">
         <p class="font-mono text-xs font-black uppercase tracking-[.16em] text-violet-700">Ce que vous faites</p>
@@ -170,7 +191,7 @@
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/hero-n8n-map.png" alt="n8n en phrase simple" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/01-overview-workflows.png" alt="n8n en phrase simple" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 01 · Comprendre · n8n en phrase simple
         </figcaption>
@@ -205,7 +226,7 @@ Objectif = automatiser une suite d’actions vérifiables</code></pre>
         <a href="https://docs.n8n.io/workflows/components/" target="_blank" rel="noreferrer" class="border-2 border-slate-950 bg-white px-3 py-1 font-mono text-xs font-black uppercase tracking-[.14em] text-blue-700 shadow-neo-sm transition hover:-translate-y-0.5">Source</a>
       </div>
       <h2 class="mt-6 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-slate-950 md:text-6xl">Automatiser sans se perdre</h2>
-      <p class="mt-5 text-lg leading-8 text-slate-700">Automatiser ne veut pas dire tout rendre automatique. Une bonne automatisation enlève une action répétitive, pas une décision importante. Si une réponse doit être validée par une personne, n8n peut préparer le message et demander une validation. Ce point est important pour garder un usage sérieux.</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700">Automatiser ne veut pas dire tout rendre automatique. Une bonne automatisation enlève une action répétitive, pas une décision importante. n8n reste un outil puissant, mais il peut vite devenir compliqué si le besoin n’est pas découpé. Le but de la séance est donc de comprendre le chemin : déclencheur, donnée, nodes, sortie, preuve.</p>
     
       <div class="border-2 border-slate-950 bg-cyan-50 p-5 shadow-neo-sm">
         <p class="font-mono text-xs font-black uppercase tracking-[.16em] text-cyan-700">Comment vérifier</p>
@@ -229,7 +250,7 @@ Manuel : envoyer une offre commerciale sensible</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/security-checklist.png" alt="Automatiser sans se perdre" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/02-workflow-editor.png" alt="Automatiser sans se perdre" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 02 · Comprendre · Automatiser sans se perdre
         </figcaption>
@@ -254,10 +275,10 @@ Manuel : envoyer une offre commerciale sensible</code></pre>
         <a href="https://docs.n8n.io/workflows/" target="_blank" rel="noreferrer" class="border-2 border-slate-950 bg-white px-3 py-1 font-mono text-xs font-black uppercase tracking-[.14em] text-blue-700 shadow-neo-sm transition hover:-translate-y-0.5">Source</a>
       </div>
       <h2 class="mt-6 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-slate-950 md:text-6xl">Le fil rouge business</h2>
-      <p class="mt-5 text-lg leading-8 text-slate-700">Toute la séance suit le même exemple. Le Comptoir Bleu reçoit une demande depuis un formulaire : nom, email, date, nombre de personnes et message libre. n8n doit nettoyer la donnée, vérifier les champs importants, préparer une réponse, notifier l’équipe et garder une trace.</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700">Toute la séance suit le même exemple. Le Comptoir Bleu reçoit une demande depuis un formulaire : nom, email, date, nombre de personnes et message libre. n8n doit nettoyer la donnée, vérifier les champs importants, préparer une réponse, notifier l’équipe et garder une trace. Ce cas simple permet de comprendre les bases sans partir dans tous les sens.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/workflow-first-build.png" alt="Le fil rouge business" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/03-execution-success.png" alt="Le fil rouge business" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 03 · Comprendre · Le fil rouge business
         </figcaption>
@@ -305,7 +326,7 @@ Sortie : notification + trace + réponse préparée</code></pre>
           <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/node-anatomy.png" alt="Workflow, node, trigger" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/07-add-node-categories.png" alt="Workflow, node, trigger" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 04 · Comprendre · Workflow, node, trigger
         </figcaption>
@@ -365,13 +386,13 @@ Execution = preuve du passage</code></pre>
         <a href="https://docs.n8n.io/workflows/components/" target="_blank" rel="noreferrer" class="border-2 border-slate-950 bg-white px-3 py-1 font-mono text-xs font-black uppercase tracking-[.14em] text-blue-700 shadow-neo-sm transition hover:-translate-y-0.5">Source</a>
       </div>
       <h2 class="mt-6 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-slate-950 md:text-6xl">La donnée circule en JSON</h2>
-      <p class="mt-5 text-lg leading-8 text-slate-700">n8n transporte des données sous forme d’objets. Ce n’est pas juste du texte sur un écran. Un node reçoit des champs, les modifie, puis transmet une sortie. Comprendre ça évite de chercher une erreur au mauvais endroit.</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700">n8n transporte des données sous forme de JSON. Dit simplement, le JSON est une façon de ranger des informations avec des noms de champs et des valeurs. Ce n’est pas juste du texte sur un écran. Un node reçoit des champs, les modifie, puis transmet une sortie. Comprendre ça évite de chercher une erreur au mauvais endroit.</p>
     
             <div class="mt-8 grid gap-6 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
               <div>
       <div class="border-2 border-slate-950 bg-violet-50 p-5 shadow-neo">
         <p class="font-mono text-xs font-black uppercase tracking-[.16em] text-violet-700">Ce que vous faites</p>
-        <p class="mt-3 leading-8 text-slate-800">Quand un node se termine, ouvrez sa sortie et repérez les noms exacts des champs : `name`, `email`, `message`, `date`. Le node suivant doit utiliser ces noms exacts.</p>
+        <p class="mt-3 leading-8 text-slate-800">Quand un node se termine, ouvrez sa sortie et repérez les noms exacts des champs : `name`, `email`, `message`, `date`. Le node suivant doit utiliser ces noms exacts. Codex ou Claude Code peut aider à écrire le JSON, mais vous devez savoir le relire.</p>
       </div>
     
       <div class="border-2 border-slate-950 bg-cyan-50 p-5 shadow-neo-sm">
@@ -386,7 +407,7 @@ Execution = preuve du passage</code></pre>
     </div>
               <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/data-flow-json.png" alt="La donnée circule en JSON" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/04-node-output.png" alt="La donnée circule en JSON" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 05 · Comprendre · La donnée circule en JSON
         </figcaption>
@@ -437,7 +458,7 @@ Execution = preuve du passage</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-overview.png" alt="Cloud ou self-hosted" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/11-settings-menu.png" alt="Cloud ou self-hosted" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 06 · Comprendre · Cloud ou self-hosted
         </figcaption>
@@ -524,7 +545,7 @@ Limite 3 : ne jamais exposer les secrets</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Trois mots reviennent souvent. Un node est une brique n8n prête à configurer. Une API est une porte HTTP pour parler à un service. MCP est un protocole qui permet à un agent comme Claude Code ou Codex d’utiliser des outils de manière structurée.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/mcp-two-directions.png" alt="API, node et MCP" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/14-instance-mcp.png" alt="API, node et MCP" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 08 · Comprendre · API, node et MCP
         </figcaption>
@@ -585,16 +606,16 @@ MCP = outil exposé à un agent</code></pre>
         <a href="https://developers.openai.com/codex/mcp" target="_blank" rel="noreferrer" class="border-2 border-slate-950 bg-white px-3 py-1 font-mono text-xs font-black uppercase tracking-[.14em] text-blue-700 shadow-neo-sm transition hover:-translate-y-0.5">Source</a>
       </div>
       <h2 class="mt-6 max-w-3xl text-4xl font-black leading-[1.02] tracking-normal text-slate-950 md:text-6xl">La place de Claude Code et Codex</h2>
-      <p class="mt-5 text-lg leading-8 text-slate-700">Claude Code et Codex ne sont pas des nodes n8n classiques. On ne les met pas dans le canvas comme un simple bouton. Ils peuvent aider de deux façons : écrire ou relire un workflow JSON via l’API n8n, ou appeler des outils n8n exposés en MCP.</p>
+      <p class="mt-5 text-lg leading-8 text-slate-700">Claude Code et Codex ne sont pas des nodes n8n classiques. On ne les met pas dans le canvas comme un simple bouton. Ils aident surtout à créer, relire et corriger la structure : workflow JSON, logique des nodes, scripts API, ou outils MCP. C’est le vrai centre de la séance.</p>
     <table class="mt-6 w-full border-collapse text-left">
           <tr>
             <th class="w-[170px] border-2 border-slate-950 bg-blue-50 px-4 py-3 text-left font-mono text-[11px] font-black uppercase tracking-[.14em] text-slate-700">Pourquoi</th>
-            <td class="border-2 border-slate-950 bg-white px-4 py-3 text-sm leading-7 text-slate-700">Claude Code et Codex ne sont pas des nodes n8n classiques. On ne les met pas dans le canvas comme un simple bouton. Ils peuvent aider de deux façons : écrire ou relire un workflow JSON via l’API n8n, ou appeler des outils n8n exposés en MCP.</td>
+            <td class="border-2 border-slate-950 bg-white px-4 py-3 text-sm leading-7 text-slate-700">Claude Code et Codex ne sont pas des nodes n8n classiques. On ne les met pas dans le canvas comme un simple bouton. Ils aident surtout à créer, relire et corriger la structure : workflow JSON, logique des nodes, scripts API, ou outils MCP. C’est le vrai centre de la séance.</td>
           </tr>
         
           <tr>
             <th class="w-[170px] border-2 border-slate-950 bg-blue-50 px-4 py-3 text-left font-mono text-[11px] font-black uppercase tracking-[.14em] text-slate-700">Action</th>
-            <td class="border-2 border-slate-950 bg-white px-4 py-3 text-sm leading-7 text-slate-700">Retenez la phrase : `Claude Code et Codex ne tournent pas dans n8n, ils travaillent autour de n8n.` Ils peuvent créer, modifier, relire ou déclencher des workflows si les accès sont bien cadrés.</td>
+            <td class="border-2 border-slate-950 bg-white px-4 py-3 text-sm leading-7 text-slate-700">Retenez la phrase : `Claude Code et Codex ne remplacent pas la compréhension de n8n, ils accélèrent la construction quand le besoin est clair.` Ils peuvent créer, modifier, relire ou déclencher des workflows si les accès sont bien cadrés.</td>
           </tr>
         
           <tr>
@@ -704,7 +725,7 @@ Utiliser un workflow = MCP n8n exposé comme outil</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-overview.png" alt="Le tableau de bord" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/01-overview-workflows.png" alt="Le tableau de bord" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 11 · Interface · Le tableau de bord
         </figcaption>
@@ -752,7 +773,7 @@ Utiliser un workflow = MCP n8n exposé comme outil</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-editor.png" alt="L’éditeur visuel" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/02-workflow-editor.png" alt="L’éditeur visuel" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 12 · Interface · L’éditeur visuel
         </figcaption>
@@ -780,7 +801,7 @@ Utiliser un workflow = MCP n8n exposé comme outil</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Le panneau des nodes sert à chercher une brique. Il contient des triggers, des actions, des nodes core, des nodes IA et parfois des intégrations installées. Il ne faut pas choisir le premier résultat sans lire son rôle.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-nodes.png" alt="Le panneau des nodes" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/07-add-node-categories.png" alt="Le panneau des nodes" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 13 · Interface · Le panneau des nodes
         </figcaption>
@@ -830,7 +851,7 @@ Tool</code></pre>
           <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/node-anatomy.png" alt="La fenêtre d’un node" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/10-gmail-actions.png" alt="La fenêtre d’un node" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 14 · Interface · La fenêtre d’un node
         </figcaption>
@@ -900,7 +921,7 @@ Tool</code></pre>
     </div>
               <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/credentials-safe.png" alt="Les credentials" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/05-openai-credential.png" alt="Les credentials" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 15 · Interface · Les credentials
         </figcaption>
@@ -941,7 +962,7 @@ Tool</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-executions.png" alt="Les executions" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/03-execution-success.png" alt="Les executions" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 16 · Interface · Les executions
         </figcaption>
@@ -991,7 +1012,7 @@ Erreur champ vide = souvent mapping</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-trigger.png" alt="Activer un workflow" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/02-workflow-editor.png" alt="Activer un workflow" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 17 · Interface · Activer un workflow
         </figcaption>
@@ -1019,7 +1040,7 @@ Erreur champ vide = souvent mapping</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Le Manual Trigger est idéal pour apprendre. Il permet de lancer un workflow à la demande, sans attendre un vrai formulaire ou un vrai événement. Cela évite de mélanger apprentissage et production.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/trigger-map.png" alt="Manual Trigger pour apprendre" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/09-search-trigger.png" alt="Manual Trigger pour apprendre" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 18 · Interface · Manual Trigger pour apprendre
         </figcaption>
@@ -1067,7 +1088,7 @@ Test workflow</code></pre>
           <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/production-routine.png" alt="Notes et organisation" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/06-node-logs-list.png" alt="Notes et organisation" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 19 · Interface · Notes et organisation
         </figcaption>
@@ -1137,7 +1158,7 @@ Test workflow</code></pre>
     </div>
               <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-ai-agent-config.png" alt="Premier tour d’interface" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/11-settings-menu.png" alt="Premier tour d’interface" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 20 · Interface · Premier tour d’interface
         </figcaption>
@@ -1234,7 +1255,7 @@ Test workflow</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-trigger.png" alt="Webhook pour recevoir" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/09-search-trigger.png" alt="Webhook pour recevoir" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 22 · Workflow · Webhook pour recevoir
         </figcaption>
@@ -1434,7 +1455,7 @@ Demande les informations manquantes si besoin.</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/workflow-first-build.png" alt="Notifier l’équipe" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/08-search-gmail.png" alt="Notifier l’équipe" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 26 · Workflow · Notifier l’équipe
         </figcaption>
@@ -1484,7 +1505,7 @@ execution_url = ...</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/production-routine.png" alt="Garder une trace" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/04-node-output.png" alt="Garder une trace" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 27 · Workflow · Garder une trace
         </figcaption>
@@ -1661,7 +1682,7 @@ execution_url = ...</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/trigger-map.png" alt="Trigger nodes" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/09-search-trigger.png" alt="Trigger nodes" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 31 · Nodes · Trigger nodes
         </figcaption>
@@ -1701,7 +1722,7 @@ execution_url = ...</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-nodes.png" alt="Action nodes" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/08-search-gmail.png" alt="Action nodes" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 32 · Nodes · Action nodes
         </figcaption>
@@ -1729,7 +1750,7 @@ execution_url = ...</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Les core nodes manipulent la logique interne : IF, Switch, Merge, Code, Set/Edit Fields, Wait, Split, Loop. Ils rendent le workflow fiable avant les actions externes.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/node-anatomy.png" alt="Core nodes" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/07-add-node-categories.png" alt="Core nodes" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 33 · Nodes · Core nodes
         </figcaption>
@@ -1848,7 +1869,7 @@ DELETE = supprimer avec prudence</code></pre>
     </div>
               <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/data-flow-json.png" alt="Code node" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/06-node-logs-list.png" alt="Code node" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 35 · Nodes · Code node
         </figcaption>
@@ -2114,7 +2135,7 @@ DELETE = supprimer avec prudence</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-ai-agent-config.png" alt="OpenAI et Anthropic dans n8n" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/05-openai-credential.png" alt="OpenAI et Anthropic dans n8n" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 41 · IA · OpenAI et Anthropic dans n8n
         </figcaption>
@@ -2566,7 +2587,7 @@ Demande une validation interne.</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/mcp-two-directions.png" alt="MCP en mots simples" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/14-instance-mcp.png" alt="MCP en mots simples" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 51 · MCP · MCP en mots simples
         </figcaption>
@@ -2606,7 +2627,7 @@ Demande une validation interne.</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/web-captures/n8n-mcp-instance-docs.png" alt="n8n serveur MCP instance" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/14-instance-mcp.png" alt="n8n serveur MCP instance" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 52 · MCP · n8n serveur MCP instance
         </figcaption>
@@ -2634,7 +2655,7 @@ Demande une validation interne.</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Le MCP Server Trigger expose un workflow comme serveur MCP. C’est utile quand vous voulez transformer un workflow n8n en outil appelable par un agent. Le workflow démarre quand l’outil MCP est appelé.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/web-captures/n8n-mcp-trigger-docs.png" alt="MCP Server Trigger" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/15-enable-mcp-access.png" alt="MCP Server Trigger" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 53 · MCP · MCP Server Trigger
         </figcaption>
@@ -3050,7 +3071,7 @@ http_headers = { &quot;authorization&quot; = &quot;Bearer &lt;TOKEN&gt;&quot; }<
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/web-captures/n8n-api-reference-docs.png" alt="API n8n en mots simples" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/12-api-settings.png" alt="API n8n en mots simples" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 61 · API · API n8n en mots simples
         </figcaption>
@@ -3108,7 +3129,7 @@ export N8N_BASE_URL=&#x27;https://votre-n8n.app.n8n.cloud&#x27;</code></pre>
     </div>
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/web-captures/n8n-api-auth-docs.png" alt="Créer une clé API" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/13-create-api-key.png" alt="Créer une clé API" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 62 · API · Créer une clé API
         </figcaption>
@@ -3136,7 +3157,7 @@ export N8N_BASE_URL=&#x27;https://votre-n8n.app.n8n.cloud&#x27;</code></pre>
       <p class="mt-5 text-lg leading-8 text-slate-700">Lister les workflows est le test le plus sûr. Il vérifie l’URL, la clé et le header sans modifier l’instance. C’est la première commande à faire avant de brancher un agent.</p>
     
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/api-create-workflow.png" alt="Lister les workflows" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/12-api-settings.png" alt="Lister les workflows" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 63 · API · Lister les workflows
         </figcaption>
@@ -3183,7 +3204,7 @@ export N8N_BASE_URL=&#x27;https://votre-n8n.app.n8n.cloud&#x27;</code></pre>
           <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
             <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/interface-s3/workflow-json-structure.png" alt="Créer un workflow" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/02-workflow-editor.png" alt="Créer un workflow" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 64 · API · Créer un workflow
         </figcaption>
@@ -3746,7 +3767,7 @@ Ne mets aucun secret dans les fichiers.</code></pre>
     </div>
               <div>
       <figure class="group min-w-0 overflow-hidden border-2 border-slate-950 bg-white shadow-neo">
-        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/n8n-executions.png" alt="Surveiller les executions" loading="lazy">
+        <img class="aspect-[16/10] w-full bg-white object-contain transition duration-300 group-hover:scale-[1.015]" src="img/user-n8n/03-execution-success.png" alt="Surveiller les executions" loading="lazy">
         <figcaption class="border-t-2 border-slate-950 bg-white px-4 py-3 text-sm font-semibold leading-6 text-slate-700">
           Visuel 75 · Production · Surveiller les executions
         </figcaption>
