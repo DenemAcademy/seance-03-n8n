@@ -4140,6 +4140,9 @@ Preuve ?</code></pre>
 
 
 
+
+
+
 <!-- DENEM visual system normalization -->
 <style id="denem-visual-system">
 :root {
@@ -4188,6 +4191,52 @@ main > section {
 .reveal.visible {
   opacity: 1 !important;
   transform: none !important;
+}
+.split,
+.hero-grid,
+.grid,
+.cards,
+.card-grid,
+.summary-grid,
+.visual-grid,
+.before-after,
+.note-row {
+  min-width: 0 !important;
+}
+.split > *,
+.hero-grid > *,
+.grid > *,
+.cards > *,
+.card-grid > *,
+.summary-grid > *,
+.visual-grid > *,
+.before-after > *,
+.note-row > * {
+  min-width: 0 !important;
+}
+img,
+video,
+canvas,
+svg {
+  max-width: 100% !important;
+  height: auto;
+}
+.table-wrap,
+.table-responsive,
+.data-table {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+}
+.prompt-card,
+pre,
+code {
+  max-width: 100% !important;
+}
+pre,
+.prompt-card pre {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere !important;
 }
 .topbar,
 .top,
