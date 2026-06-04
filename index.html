@@ -213,7 +213,15 @@ Objectif = automatiser une suite d’actions vérifiables</code></pre>
     </div>
           </div>
         
-    </section>
+    
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://docs.n8n.io/" target="_blank" rel="noopener">
+    <span>Documentation n8n</span>
+    <small>Point d&#x27;entree officiel.</small>
+  </a>
+</div>
+</section>
     
 
     <section id="section-02" class="section-block reveal mx-auto max-w-7xl bg-white px-4 py-14 sm:px-6 lg:px-8">
@@ -1518,7 +1526,15 @@ execution_url = ...</code></pre>
     </div>
           </div>
         
-    </section>
+    
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://docs.n8n.io/hosting/" target="_blank" rel="noopener">
+    <span>Heberger n8n</span>
+    <small>Comprendre les options self-hosted et cloud.</small>
+  </a>
+</div>
+</section>
     
 
     <section id="section-28" class="section-block reveal mx-auto max-w-7xl bg-white px-4 py-14 sm:px-6 lg:px-8">
@@ -2730,7 +2746,15 @@ Demande une validation interne.</code></pre>
         </table></div>
           </div>
         
-    </section>
+    
+<div class="denem-inline-docs">
+  <strong>Documentation utile</strong>
+  <a href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/" target="_blank" rel="noopener">
+    <span>Webhooks n8n</span>
+    <small>Recevoir des donnees depuis un formulaire ou un outil externe.</small>
+  </a>
+</div>
+</section>
     
 
     <section id="section-55" class="section-block reveal mx-auto max-w-7xl bg-white px-4 py-14 sm:px-6 lg:px-8">
@@ -4097,7 +4121,123 @@ Preuve ?</code></pre>
     </div>
     </main>
 
-    <footer class="border-t-2 border-slate-950 bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
+    
+<!-- DENEM documentation enrichment -->
+<style id="denem-docs-style">
+.denem-docs-section {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 72px 18px;
+  background: #fff;
+  color: var(--denem-ink, #111827);
+  border-bottom: 2px solid var(--denem-ink, #111827);
+}
+.denem-docs-wrap {
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow, 5px 5px 0 #111827);
+  padding: 26px;
+  background: #fff;
+}
+.denem-docs-kicker,
+.denem-inline-docs strong {
+  display: inline-flex;
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow-sm, 3px 3px 0 #111827);
+  background: var(--denem-accent, #2563eb);
+  color: #fff;
+  padding: 6px 10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+.denem-docs-section h2 {
+  margin: 18px 0 10px;
+  font-size: clamp(32px, 4vw, 54px);
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+.denem-docs-section p {
+  max-width: 760px;
+  color: #334155;
+  line-height: 1.75;
+  font-size: 18px;
+}
+.denem-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.denem-doc-card,
+.denem-inline-docs a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid var(--denem-ink, #111827);
+  box-shadow: var(--denem-shadow-sm, 3px 3px 0 #111827);
+  padding: 16px;
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+.denem-doc-card span,
+.denem-inline-docs a span {
+  font-weight: 900;
+  color: var(--denem-accent, #2563eb);
+}
+.denem-doc-card small,
+.denem-inline-docs a small {
+  color: #475569;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.denem-inline-docs {
+  margin-top: 22px;
+  display: grid;
+  gap: 12px;
+  max-width: 760px;
+}
+@media (max-width: 900px) {
+  .denem-docs-grid { grid-template-columns: 1fr; }
+  .denem-docs-section { padding: 52px 16px; }
+  .denem-docs-wrap { padding: 18px; }
+}
+</style>
+<section id="documentation" class="denem-docs-section" aria-label="Documentation externe">
+  <div class="denem-docs-wrap">
+    <div class="denem-docs-kicker">Documentation</div>
+    <h2>Documentation</h2>
+    <p>Liens externes utiles pour refaire la methode, verifier un outil et aller plus loin sans chercher au hasard.</p>
+    <div class="denem-docs-grid">
+      <a class="denem-doc-card" href="https://docs.n8n.io/" target="_blank" rel="noopener">
+        <span>Documentation n8n</span>
+        <small>Point d&#x27;entree officiel.</small>
+      </a>
+      <a class="denem-doc-card" href="https://docs.n8n.io/hosting/" target="_blank" rel="noopener">
+        <span>Heberger n8n</span>
+        <small>Comprendre les options self-hosted et cloud.</small>
+      </a>
+      <a class="denem-doc-card" href="https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/" target="_blank" rel="noopener">
+        <span>Webhooks n8n</span>
+        <small>Recevoir des donnees depuis un formulaire ou un outil externe.</small>
+      </a>
+      <a class="denem-doc-card" href="https://docs.n8n.io/credentials/" target="_blank" rel="noopener">
+        <span>Credentials n8n</span>
+        <small>Gerer les acces sans exposer les secrets.</small>
+      </a>
+      <a class="denem-doc-card" href="https://modelcontextprotocol.io/docs/getting-started/intro" target="_blank" rel="noopener">
+        <span>Model Context Protocol</span>
+        <small>Comprendre la logique MCP derriere les connecteurs.</small>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- /DENEM documentation enrichment -->
+
+<footer class="border-t-2 border-slate-950 bg-slate-950 px-4 py-10 text-white sm:px-6 lg:px-8">
       <div class="mx-auto flex max-w-7xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p class="font-black">DENEM Academy · Séance 3 · n8n</p>
         <p class="text-sm text-slate-300">80 sections · captures n8n · API · MCP · Claude Code · Codex</p>
