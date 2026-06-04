@@ -4143,6 +4143,9 @@ Preuve ?</code></pre>
 
 
 
+
+
+
 <!-- DENEM visual system normalization -->
 <style id="denem-visual-system">
 :root {
@@ -4241,7 +4244,8 @@ pre,
 .topbar,
 .top,
 nav.top,
-header.topbar {
+header.topbar,
+body > nav:first-of-type {
   position: sticky !important;
   top: 0 !important;
   z-index: 100 !important;
@@ -4268,7 +4272,13 @@ header.topbar {
   gap: 8px !important;
   overflow-x: auto !important;
   max-width: 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
   scrollbar-width: thin;
+}
+.denem-auto-nav {
+  flex: 1 1 auto !important;
+  justify-content: flex-end !important;
 }
 .nav a,
 .links a,
@@ -4399,6 +4409,51 @@ blockquote {
 .act p:first-child {
   color: var(--denem-accent) !important;
 }
+.progress {
+  background: var(--denem-accent) !important;
+  background-image: none !important;
+}
+[class*="bg-gradient"] {
+  background: #fff !important;
+  background-image: none !important;
+}
+[class*="bg-blue-50"],
+[class*="bg-violet-50"],
+[class*="bg-cyan-50"],
+[class*="bg-emerald-50"],
+[class*="bg-green-50"],
+[class*="bg-orange-50"],
+[class*="bg-yellow-50"],
+[class*="bg-indigo-50"],
+[class*="bg-purple-50"],
+[class*="bg-pink-50"] {
+  background: #fff !important;
+}
+[class*="bg-blue-"],
+[class*="bg-violet-"],
+[class*="bg-cyan-"],
+[class*="bg-emerald-"],
+[class*="bg-green-"],
+[class*="bg-orange-"],
+[class*="bg-yellow-"],
+[class*="bg-indigo-"],
+[class*="bg-purple-"],
+[class*="bg-pink-"] {
+  background-color: var(--denem-accent) !important;
+  color: #fff !important;
+}
+[class*="text-blue-"],
+[class*="text-violet-"],
+[class*="text-cyan-"],
+[class*="text-emerald-"],
+[class*="text-green-"],
+[class*="text-orange-"],
+[class*="text-yellow-"],
+[class*="text-indigo-"],
+[class*="text-purple-"],
+[class*="text-pink-"] {
+  color: var(--denem-accent) !important;
+}
 th,
 .data-table th,
 .compare th {
@@ -4441,7 +4496,20 @@ tbody tr:nth-child(even) td,
     .sort((a, b) => a - b);
 
   const unique = Array.from(new Set(sections));
-  const nav = document.querySelector('.topbar .nav, .top .links, .top .nav, nav.nav, .links, .nav');
+  let nav = document.querySelector('.topbar .nav, .top .links, .top .nav, nav.nav, .links, .nav');
+  if (!nav && unique.length) {
+    const shell = document.querySelector('body > nav:first-of-type .topbar-inner, body > nav:first-of-type .top-inner, body > nav:first-of-type .nav-inner, body > nav:first-of-type .mx-auto, body > nav:first-of-type');
+    if (shell) {
+      shell.querySelectorAll('a[href^="#section-"], a[href="#sources"], a[href="#assets"]').forEach(a => {
+        const parent = a.parentElement;
+        if (parent && parent !== shell && parent.querySelectorAll('a').length <= 4) parent.remove();
+        else a.remove();
+      });
+      nav = document.createElement('div');
+      nav.className = 'nav denem-auto-nav';
+      shell.appendChild(nav);
+    }
+  }
   if (nav && unique.length) {
     nav.setAttribute('aria-label', 'Navigation sections');
     nav.innerHTML = unique.map(n => {
@@ -4452,9 +4520,9 @@ tbody tr:nth-child(even) td,
 
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 
-  document.querySelectorAll('.stat, .hero-stats .stat, .stats .stat, .summary-card, .act').forEach(el => {
+  document.querySelectorAll('.stat, .hero-stats .stat, .stats .stat, .summary-card, .act, p, span, small, strong, li, div').forEach(el => {
     if (/sections?\s+(guidées|guides|section)|sections?\s*\d+|\d+\s*sections?/i.test(el.textContent || '')) {
-      el.remove();
+      if ((el.textContent || '').trim().length < 180 && !el.matches('body, main, section, article, nav, header')) el.remove();
     }
   });
 
