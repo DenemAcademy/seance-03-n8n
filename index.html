@@ -4136,5 +4136,282 @@ Preuve ?</code></pre>
         }
       });
     </script>
-  </body>
+  
+<!-- DENEM visual system normalization -->
+<style id="denem-visual-system">
+:root {
+  --denem-accent: #2563EB;
+  --denem-ink: #111827;
+  --denem-paper: #ffffff;
+  --denem-shadow: 5px 5px 0 #111827;
+  --denem-shadow-sm: 3px 3px 0 #111827;
+}
+html { background: var(--denem-paper) !important; }
+body {
+  background: var(--denem-paper) !important;
+  color: var(--denem-ink) !important;
+  letter-spacing: 0 !important;
+}
+body::before,
+body::after,
+.hero::before,
+.hero-main::before,
+header::before {
+  background-image: none !important;
+}
+.hero,
+.hero-main,
+.summary,
+.lesson,
+.support-section,
+.section,
+.tone-white,
+.tone-ice,
+.tone-soft,
+.tone-signal,
+.tone-dark,
+.tone-blue,
+.tone-dark,
+.tone-1,
+.tone-2,
+.tone-3,
+.tone-4,
+.tone-5,
+main > section {
+  background: var(--denem-paper) !important;
+  background-image: none !important;
+}
+.topbar,
+.top,
+nav.top,
+header.topbar {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  background: rgba(255,255,255,.96) !important;
+  border-bottom: 2px solid var(--denem-ink) !important;
+  backdrop-filter: blur(12px) !important;
+}
+.top-inner,
+.nav,
+.nav-inner,
+.top .nav,
+.topbar .top-inner {
+  background: transparent !important;
+}
+.brand small,
+.brand-subtitle,
+.brand .subtitle,
+.brand span small {
+  color: var(--denem-accent) !important;
+}
+.nav,
+.links {
+  display: flex !important;
+  gap: 8px !important;
+  overflow-x: auto !important;
+  max-width: 100% !important;
+  scrollbar-width: thin;
+}
+.nav a,
+.links a,
+.hero-actions a,
+.summary-card,
+.act,
+.badge,
+.eyebrow,
+.meta span,
+.num,
+.copy-btn,
+.copy,
+button.copy,
+.btn {
+  border: 2px solid var(--denem-ink) !important;
+  box-shadow: var(--denem-shadow-sm) !important;
+  border-radius: 0 !important;
+}
+.nav a,
+.links a {
+  background: #fff !important;
+  color: var(--denem-ink) !important;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .08em !important;
+  padding: 8px 10px !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+}
+.nav a.active,
+.nav a:hover,
+.links a.active,
+.links a:hover,
+.hero-actions a:first-child,
+.num,
+.eyebrow,
+.badge.num,
+.meta .num {
+  background: var(--denem-accent) !important;
+  color: #fff !important;
+}
+.progress,
+.progress span,
+#progress,
+.progress-bar {
+  background: var(--denem-accent) !important;
+}
+h1 span,
+h2 span,
+.accent,
+.gradient-text {
+  color: var(--denem-accent) !important;
+  -webkit-text-fill-color: currentColor !important;
+  background: none !important;
+}
+.copy,
+.text-card,
+.poster-copy,
+.note,
+.final-box,
+.story-main,
+.section-head,
+.check-copy,
+.compare-copy,
+.quote-detail,
+.prompt-copy,
+.prompt-wide-copy,
+.image-copy,
+.opener-copy,
+.card,
+.card-grid article,
+.summary-card,
+.act,
+.media-card,
+.shot,
+.table-wrap,
+.compare,
+.diagnostic,
+.prompt-card,
+.prompt-panel,
+.code-panel {
+  border-color: var(--denem-ink) !important;
+  box-shadow: var(--denem-shadow) !important;
+  border-radius: 0 !important;
+}
+.card-grid article,
+.summary-card,
+.act,
+.copy,
+.text-card,
+.poster-copy,
+.note,
+.final-box,
+.story-main,
+.section-head,
+.check-copy,
+.compare-copy,
+.quote-detail,
+.prompt-copy,
+.prompt-wide-copy,
+.image-copy,
+.opener-copy,
+.media-card,
+.shot,
+.table-wrap,
+.compare {
+  background: #fff !important;
+}
+.prompt-card,
+.prompt-panel,
+.code-panel,
+blockquote {
+  background: var(--denem-ink) !important;
+  color: #fff !important;
+}
+.prompt-head,
+.prompt-panel .prompt-head {
+  background: #0b1220 !important;
+  border-bottom: 2px solid rgba(255,255,255,.18) !important;
+}
+.prompt-head span,
+.prompt-panel .prompt-head span,
+.card-grid b,
+.note b,
+.diagnostic b,
+.summary-card b,
+.act p:first-child {
+  color: var(--denem-accent) !important;
+}
+th,
+.data-table th,
+.compare th {
+  background: var(--denem-accent) !important;
+  color: #fff !important;
+}
+tbody tr:nth-child(even) td,
+.card-grid article:nth-child(2),
+.card-grid article:nth-child(3),
+.check-list li:nth-child(2n),
+.check-list li:nth-child(3n),
+.timeline div:nth-child(2),
+.timeline div:nth-child(3),
+.summary-card:nth-child(odd),
+.act:nth-child(odd),
+.act:nth-child(3n) {
+  background: #fff !important;
+}
+.stat,
+.hero-stats,
+.stats {
+  background: #fff !important;
+}
+@media (max-width: 700px) {
+  .nav a,
+  .links a {
+    font-size: 10px !important;
+    padding: 7px 9px !important;
+  }
+}
+</style>
+<script id="denem-visual-system-script">
+(function () {
+  const sections = Array.from(document.querySelectorAll('[id^="section-"]'))
+    .map(section => {
+      const match = section.id.match(/section-(\d+)/);
+      return match ? Number(match[1]) : null;
+    })
+    .filter(Number.isFinite)
+    .sort((a, b) => a - b);
+
+  const unique = Array.from(new Set(sections));
+  const nav = document.querySelector('.topbar .nav, .top .links, .top .nav, nav.nav, .links, .nav');
+  if (nav && unique.length) {
+    nav.setAttribute('aria-label', 'Navigation sections');
+    nav.innerHTML = unique.map(n => {
+      const label = String(n).padStart(2, '0');
+      return `<a href="#section-${label}">${label}</a>`;
+    }).join('');
+  }
+
+  document.querySelectorAll('.stat, .hero-stats .stat, .stats .stat, .summary-card, .act').forEach(el => {
+    if (/sections?\s+(guidées|guides|section)|sections?\s*\d+|\d+\s*sections?/i.test(el.textContent || '')) {
+      el.remove();
+    }
+  });
+
+  const setActive = () => {
+    let current = unique[0] ? `section-${String(unique[0]).padStart(2, '0')}` : '';
+    for (const section of document.querySelectorAll('[id^="section-"]')) {
+      if (section.getBoundingClientRect().top < 150) current = section.id;
+    }
+    document.querySelectorAll('.nav a, .links a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === `#${current}`);
+    });
+  };
+  addEventListener('scroll', setActive, { passive: true });
+  setActive();
+})();
+</script>
+
+</body>
 </html>
