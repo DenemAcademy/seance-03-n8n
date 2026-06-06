@@ -24,8 +24,134 @@
       .section-block img { max-width: 100%; }
       @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } * { scroll-behavior: auto !important; } }
     </style>
-  </head>
+  
+<style id="denem-act-system">
+:root {
+  --denem-act-color: #1E3A8A;
+  --denem-act-bg: #ffffff;
+}
+body {
+  background: #ffffff !important;
+}
+.progress,
+.progress-bar,
+#progress {
+  background: var(--denem-act-color) !important;
+}
+.denem-act-ribbon,
+.denem-sources-final {
+  background: #ffffff;
+  color: #0f172a;
+  border-top: 4px solid var(--denem-act-color);
+  border-bottom: 4px solid var(--denem-act-color);
+}
+.denem-act-ribbon {
+  padding: 18px;
+}
+.denem-act-ribbon__inner,
+.denem-sources-final__inner {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.denem-act-ribbon__kicker,
+.denem-sources-final__kicker {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--denem-act-color);
+  background: var(--denem-act-color);
+  color: #ffffff;
+  padding: 8px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.denem-act-ribbon h2,
+.denem-sources-final h2 {
+  margin: 14px 0 8px;
+  color: var(--denem-act-color);
+  font-size: 48px;
+  line-height: 1.03;
+  font-weight: 950;
+  letter-spacing: 0;
+}
+.denem-act-ribbon p {
+  max-width: 920px;
+  margin: 0;
+  color: #334155;
+  font-size: 18px;
+  line-height: 1.7;
+}
+.denem-act-ribbon__chips,
+.denem-sources-final ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.denem-act-ribbon__chips span,
+.denem-sources-final a {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--denem-act-color);
+  background: #ffffff;
+  color: #0f172a;
+  padding: 10px 12px;
+  text-decoration: none;
+  font-weight: 900;
+}
+.denem-sources-final a:hover {
+  background: var(--denem-act-color);
+  color: #ffffff;
+}
+.denem-sources-final {
+  padding: 56px 18px;
+}
+.eyebrow,
+.section-meta span,
+.meta-row .num,
+.nav a.active,
+.nav-chip.is-active,
+.summary-card b {
+  background-color: var(--denem-act-color) !important;
+  border-color: var(--denem-act-color) !important;
+  color: #ffffff !important;
+}
+@media (max-width: 700px) {
+  .denem-act-ribbon h2,
+  .denem-sources-final h2 {
+    font-size: 32px;
+  }
+  .denem-act-ribbon,
+  .denem-sources-final {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .denem-sources-final ul {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+</head>
   <body class="bg-white">
+
+<section class="denem-act-ribbon" aria-label="Acte stratégique">
+  <div class="denem-act-ribbon__inner">
+    <span class="denem-act-ribbon__kicker">Acte 1 · Séances 1-3</span>
+    <h2>Fondations IA / agents / automatisation</h2>
+    <p>Séance 03. Cette page appartient à l’acte 1 de la formation : fond blanc, couleur dominante Bleu nuit, progression lisible et fin standardisée par sources externes.</p>
+    <div class="denem-act-ribbon__chips">
+      <span>Fond blanc</span>
+      <span>Bleu nuit</span>
+      <span>#1E3A8A</span>
+    </div>
+  </div>
+</section>
+
     <div class="progress fixed left-0 top-0 z-[70] h-1 w-full bg-gradient-to-r from-blue-600 via-violet-600 to-cyan-500" id="progress"></div>
     <nav class="sticky top-0 z-50 border-b-2 border-slate-950 bg-white/95 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
@@ -4777,6 +4903,21 @@ tbody tr:nth-child(even) td,
   setActive();
 })();
 </script>
+
+
+<section class="denem-sources-final" id="sources" aria-labelledby="sources-title">
+  <div class="denem-sources-final__inner">
+    <span class="denem-sources-final__kicker">Sources</span>
+    <h2 id="sources-title">Sources</h2>
+    <ul>
+      <li><a href="https://developers.openai.com/api/docs/" target="_blank" rel="noreferrer">OpenAI API Documentation</a></li>
+      <li><a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noreferrer">Anthropic Claude Code Documentation</a></li>
+      <li><a href="https://docs.n8n.io/" target="_blank" rel="noreferrer">n8n Documentation</a></li>
+      <li><a href="https://modelcontextprotocol.io/docs" target="_blank" rel="noreferrer">Model Context Protocol</a></li>
+      <li><a href="https://docs.github.com/en/pages" target="_blank" rel="noreferrer">GitHub Pages Documentation</a></li>
+    </ul>
+  </div>
+</section>
 
 </body>
 </html>
