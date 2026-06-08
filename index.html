@@ -137,8 +137,8 @@ body {
   }
 }
 </style>
-<!-- DENEM three-color act theme -->
-<style id="denem-three-color-act-theme">
+<!-- DENEM support visual theme -->
+<style id="denem-support-visual-theme">
 :root {
   color-scheme: light;
   --denem-white: #FFFFFF;
@@ -613,25 +613,101 @@ hr {
 }
 </style>
 
+
+<style id="denem-student-header-cleanup">
+.denem-act-ribbon {
+  padding: 28px 18px !important;
+  background: #ffffff !important;
+}
+.denem-act-ribbon__inner {
+  max-width: 1320px !important;
+  margin: 0 auto !important;
+}
+.denem-act-ribbon__topline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.denem-act-ribbon__session {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid #0f172a;
+  background: #ffffff;
+  color: #0f172a;
+  padding: 8px 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  box-shadow: 4px 4px 0 var(--denem-act-color, var(--denem-act, #6d3df2));
+}
+.denem-act-ribbon h2 {
+  max-width: 1040px;
+  margin: 0 0 12px !important;
+  color: #0f172a !important;
+  font-size: clamp(34px, 5vw, 68px) !important;
+  line-height: .98 !important;
+  letter-spacing: 0 !important;
+}
+.denem-act-ribbon p {
+  max-width: 960px !important;
+  margin: 0 !important;
+  color: #334155 !important;
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
+.denem-act-ribbon__chips {
+  gap: 10px !important;
+  margin-top: 18px !important;
+}
+.denem-act-ribbon__chips span {
+  border: 2px solid #0f172a !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  padding: 10px 12px !important;
+  font-weight: 850 !important;
+  line-height: 1.25 !important;
+  box-shadow: 3px 3px 0 var(--denem-act-color, var(--denem-act, #6d3df2));
+}
+@media (max-width: 700px) {
+  .denem-act-ribbon {
+    padding: 22px 14px !important;
+  }
+  .denem-act-ribbon h2 {
+    font-size: clamp(30px, 11vw, 44px) !important;
+  }
+  .denem-act-ribbon p {
+    font-size: 16px !important;
+  }
+  .denem-act-ribbon__chips {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
 </head>
   <body class="bg-white">
 
-<section class="denem-act-ribbon" aria-label="Acte stratégique">
+<section class="denem-act-ribbon" aria-label="En-tête du support de cours">
   <div class="denem-act-ribbon__inner">
-    <span class="denem-act-ribbon__kicker">Acte 1 · Séances 1-3</span>
-    <h2>Fondations IA / agents / automatisation</h2>
-    
-    <div class="denem-act-ribbon__chips">
-      <span>Fond blanc</span>
-      <span>Bleu nuit</span>
-      <span>#1E3A8A</span>
+    <div class="denem-act-ribbon__topline">
+      <span class="denem-act-ribbon__kicker">Acte 1 · Séances 1-3</span>
+      <span class="denem-act-ribbon__session">Séance 03</span>
+    </div>
+    <h2>n8n</h2>
+    <p>Un repère simple pour savoir où tu es, quoi faire et comment retrouver les étapes importantes.</p>
+    <div class="denem-act-ribbon__chips" aria-label="Repères utiles du support">
+      <span>Parcours · Installer les bases IA : Claude Code, Codex et n8n</span>
+      <span>À faire · Suivre la séance puis refaire seul</span>
+      <span>Navigation · Boutons 01, 02, 03... pour retrouver une étape</span>
     </div>
   </div>
 </section>
 
-
-
-    <div class="progress fixed left-0 top-0 z-[70] h-1 w-full bg-gradient-to-r from-blue-600 via-violet-600 to-cyan-500" id="progress"></div>
+<div class="progress fixed left-0 top-0 z-[70] h-1 w-full bg-gradient-to-r from-blue-600 via-violet-600 to-cyan-500" id="progress"></div>
     <nav class="sticky top-0 z-50 border-b-2 border-slate-950 bg-white/95 backdrop-blur">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <a href="#" class="flex items-center gap-3">
@@ -4883,19 +4959,8 @@ Preuve ?</code></pre>
     </ul>
   </div>
 </section>
-<script id="denem-three-color-act-theme-script">
+<script id="denem-support-script">
 (function () {
-  const header = document.querySelector('header');
-  if (header) {
-    const colorPattern = /(Cette page appartient|couleur dominante|Fond blanc|Vert Supabase|Bleu LinkedIn|#[0-9A-Fa-f]{6})/;
-    header.querySelectorAll('p, span, div, li').forEach((el) => {
-      const text = (el.textContent || '').replace(/\s+/g, ' ').trim();
-      if (text.length > 0 && text.length < 240 && colorPattern.test(text)) {
-        el.remove();
-      }
-    });
-  }
-
   document.querySelectorAll('.reveal').forEach((el) => {
     el.classList.add('visible', 'is-visible');
   });
